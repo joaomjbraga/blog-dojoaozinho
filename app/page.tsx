@@ -7,10 +7,6 @@ export default async function Home() {
   return (
     <main className="px-4 py-6 md:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
       <section className="space-y-4">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
-          <span className="sr-only">Blog Pessoal de </span>
-          João M J Braga
-        </h1>
         <p className="text-muted-foreground text-base md:text-lg max-w-2xl">
           Bem-vindo ao meu blog pessoal onde compartilho meus pensamentos sobre tecnologia, design e vida.
         </p>

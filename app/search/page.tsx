@@ -36,30 +36,37 @@ export default function SearchPage() {
   }, [query])
 
   return (
-    <div className="space-y-8">
-      <section className="space-y-4">
-        <h1 className="text-3xl font-bold tracking-tight">Resultados da Busca</h1>
-        <SearchBar defaultValue={query} />
-      </section>
+    <main className="container mx-auto px-4 py-8 min-h-screen" role="main">
+      <div className="space-y-8 max-w-7xl mx-auto">
+        <section className="space-y-4" aria-label="Área de busca">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Resultados da Busca</h1>
+          <SearchBar defaultValue={query} aria-label="Campo de busca" />
+        </section>
 
-      <section className="space-y-6">
-        {loading ? (
-          <div>Buscando...</div>
-        ) : results.length > 0 ? (
-          <>
-            <p className="text-muted-foreground">
-              Encontrado {results.length} resultado{results.length !== 1 ? "s" : ""} para "{query}"
-            </p>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {results.map((post) => (
-                <PostCard key={post.slug} post={post} />
-              ))}
+        <section className="space-y-6" aria-label="Resultados da busca">
+          {loading ? (
+            <div role="status" aria-live="polite" className="flex items-center justify-center p-4">
+              <span className="sr-only">Carregando resultados</span>
+              <div>Buscando...</div>
             </div>
-          </>
-        ) : (
-          <p className="text-muted-foreground">Nenhum resultado encontrado para "{query}"</p>
-        )}
-      </section>
-    </div>
+          ) : results.length > 0 ? (
+            <>
+              <p className="text-muted-foreground" aria-live="polite">
+                Encontrado {results.length} resultado{results.length !== 1 ? "s" : ""} para "{query}"
+              </p>
+              <div className="grid gap-4 xs:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {results.map((post) => (
+                  <PostCard key={post.slug} post={post} />
+                ))}
+              </div>
+            </>
+          ) : (
+            <p className="text-muted-foreground" role="status" aria-live="polite">
+              Nenhum resultado encontrado para "{query}"
+            </p>
+          )}
+        </section>
+      </div>
+    </main>
   )
 }
