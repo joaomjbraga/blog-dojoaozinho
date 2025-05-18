@@ -9,12 +9,12 @@ import Footer from "@/components/footer"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "João M J Braga | Blog",
+  title: "Blog do Joãozinho",
   icons: {
     icon: "/favicon.svg",
   },
-  description: "Blog pessoal de João M J Braga",
-  generator: 'v0.dev'
+  description: "Blog de João M J Braga Dev",
+  generator: 'developer'
 }
 
 export default function RootLayout({
@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <Header />
           <main className="flex-1 container mx-auto px-4 py-8">{children}</main>
           <Footer />

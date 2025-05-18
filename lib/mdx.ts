@@ -11,7 +11,9 @@ export interface Post {
   date?: string
   excerpt?: string
   content: string
+  image?: string
 }
+
 
 export async function getAllPosts(): Promise<Post[]> {
   // Create the directory if it doesn't exist
@@ -71,9 +73,10 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       date: data.date ? new Date(data.date).toISOString() : undefined,
       excerpt: data.excerpt || content.substring(0, 150) + "...",
       content: content,
+      image: data.image || undefined,
     }
   } catch (error) {
-    console.error(`Error getting post by slug ${slug}:`, error)
+    console.error(`Error processing post ${slug}:`, error)
     return null
   }
 }

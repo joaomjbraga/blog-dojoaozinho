@@ -43,11 +43,11 @@ export default function Header() {
           {/* Logo */}
           <Link 
             href="/" 
-            className="group font-bold text-xl tracking-tight hover:text-primary transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md flex items-center gap-2"
+            className="group font-bold tracking-tight hover:text-primary transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md flex items-center gap-2"
             aria-label="Ir para página inicial"
           >
-            <span className="text-primary group-hover:scale-105 transition-transform">João</span>
-            <span className="text-foreground/80 group-hover:text-primary">Blog</span>
+            <span className="text-primary group-hover:scale-105 transition-transform text-base sm:text-lg lg:text-xl">Blog</span>
+            <span className="text-foreground/80 group-hover:text-primary text-sm sm:text-base lg:text-lg whitespace-nowrap"> do Joãozinho</span>
           </Link>
 
           {/* Navegação Desktop */}

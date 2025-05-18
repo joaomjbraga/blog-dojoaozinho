@@ -36,19 +36,20 @@ export default function SearchBar({ defaultValue = "" }: SearchBarProps) {
         placeholder="Pesquisar posts..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="flex-1 min-w-0 text-sm sm:text-base"
+        className="flex-1 min-w-0 text-sm sm:text-base dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-primary"
         aria-label="Campo de busca"
         id="search-input"
         name="q"
         autoComplete="off"
+        required
       />
       <Button 
         type="submit" 
         size="icon" 
-        className="shrink-0 h-9 w-9 sm:h-10 sm:w-10"
+        className="shrink-0 h-9 w-9 sm:h-10 sm:w-10 dark:bg-lime-500 dark:hover:bg-lime-600 dark:focus:ring-lime-600"
         aria-label="Pesquisar"
       >
-        <Search className="h-4 w-4" />
+        <Search className="h-4 w-4 text-gray-100 dark:text-gray-100" />
       </Button>
     </form>
   )
