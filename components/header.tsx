@@ -10,50 +10,52 @@ export default function Header() {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  
+
   const isActive = (path: string): boolean => {
     return pathname === path
   }
-  
-  // Detectar rolagem para ajustar visual do header
+
+  // Detectar rolagem para ajustar estilo do header
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10)
     }
-    
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-  
-  // Fechar o menu ao navegar para uma nova página
+
+  // Fechar menu mobile ao navegar
   useEffect(() => {
     setIsMenuOpen(false)
   }, [pathname])
-  
+
   return (
     <header 
-      className={`sticky top-0 z-50 border-b transition-all duration-200 ${
-        scrolled ? 'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm' : 'bg-background'
+      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+        scrolled 
+          ? 'bg-gradient-to-r from-background via-background/90 to-background/80 backdrop-blur-md shadow-lg' 
+          : 'bg-background'
       }`} 
       role="banner"
     >
-      <div className="container mx-auto px-4 py-3 max-w-7xl">
-        <div className="flex items-center justify-between gap-3">
-          {/* Logo/Nome do site */}
+      <div className="container mx-auto px-4 py-4 max-w-7xl">
+        <div className="flex items-center justify-between gap-4">
+          {/* Logo */}
           <Link 
             href="/" 
-            className="font-medium text-lg hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm flex items-center gap-2 min-w-max"
+            className="group font-bold text-xl tracking-tight hover:text-primary transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md flex items-center gap-2"
             aria-label="Ir para página inicial"
           >
-            <span className="text-primary font-bold">João</span> | <span>Blog</span>
+            <span className="text-primary group-hover:scale-105 transition-transform">João</span>
+            <span className="text-foreground/80 group-hover:text-primary">Blog</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex md:flex-1 md:items-center md:justify-between">
-            {/* Barra de busca (Desktop) */}
-            <div className="w-full max-w-md mx-0 ml-4">
+          {/* Navegação Desktop */}
+          <div className="hidden md:flex flex-1 items-center justify-between gap-6">
+            {/* Barra de Busca Desktop */}
+            <div className="w-full max-w-sm mx-6">
               <Suspense fallback={
-                <div className="min-h-[40px] flex items-center text-sm text-muted-foreground animate-pulse" role="status">
+                <div className="min-h-[38px] flex items-center text-sm text-muted-foreground animate-pulse" role="status">
                   Carregando busca...
                 </div>
               }>
@@ -61,92 +63,93 @@ export default function Header() {
               </Suspense>
             </div>
 
-            {/* Navegação e Toggle de tema (Desktop) */}
+            {/* Menu Desktop */}
             <nav 
-              className="hidden md:flex items-center gap-4"
+              className="flex items-center gap-6"
               role="navigation"
               aria-label="Menu principal"
             >
-              <div className="flex items-center gap-5">
-                <Link 
-                  href="/" 
-                  className={`relative px-2 py-1 text-sm transition-colors rounded-md hover:bg-secondary
-                    ${isActive('/') ? 'text-primary font-medium after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary' : 'hover:text-primary'}`}
-                  aria-current={isActive('/') ? "page" : undefined}
-                >
-                  Início
-                </Link>
-                <Link 
-                  href="/blog" 
-                  className={`relative px-2 py-1 text-sm transition-colors rounded-md hover:bg-secondary
-                    ${isActive('/blog') ? 'text-primary font-medium after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary' : 'hover:text-primary'}`}
-                  aria-current={isActive('/blog') ? "page" : undefined}
-                >
-                  Blog
-                </Link>
-                <ThemeToggle />
-              </div>
+              <Link 
+                href="/" 
+                className={`relative px-3 py-1 text-sm font-medium transition-all duration-200 rounded-md hover:bg-secondary/50 hover:scale-105
+                  ${isActive('/') ? 'text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary after:scale-x-100 after:transition-transform after:duration-300' : 'hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary after:scale-x-0 after:transition-transform after:duration-300'}`}
+                aria-current={isActive('/') ? "page" : undefined}
+              >
+                Início
+              </Link>
+              <Link 
+                href="/blog" 
+                className={`relative px-3 py-1 text-sm font-medium transition-all duration-200 rounded-md hover:bg-secondary/50 hover:scale-105
+                  ${isActive('/blog') ? 'text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary after:scale-x-100 after:transition-transform after:duration-300' : 'hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary after:scale-x-0 after:transition-transform after:duration-300'}`}
+                aria-current={isActive('/blog') ? "page" : undefined}
+              >
+                Blog
+              </Link>
+              <ThemeToggle />
             </nav>
           </div>
-          
-          {/* Mobile Controls (Theme Toggle + Menu Button) */}
+
+          {/* Controles Mobile */}
           <div className="flex items-center gap-3 md:hidden">
             <ThemeToggle />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-foreground rounded-md hover:bg-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+              className="p-2 text-foreground rounded-full hover:bg-secondary/50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary"
               aria-expanded={isMenuOpen}
               aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
             >
               {isMenuOpen ? (
-                <X size={24} aria-hidden="true" />
+                <X size={24} className="rotate-0 transition-transform duration-300" aria-hidden="true" />
               ) : (
-                <Menu size={24} aria-hidden="true" />
+                <Menu size={24} className="rotate-0 transition-transform duration-300" aria-hidden="true" />
               )}
             </button>
           </div>
         </div>
-        
-        {/* Mobile Menu */}
+
+        {/* Menu Mobile */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            isMenuOpen ? 'max-h-96 opacity-100 py-4' : 'max-h-0 opacity-0'
+          className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
+            isMenuOpen ? 'max-h-[500px] opacity-100 py-4' : 'max-h-0 opacity-0'
           }`}
           aria-hidden={!isMenuOpen}
         >
-          {/* Mobile Navigation */}
-          <nav className="flex flex-col space-y-4">
-            <div className="pb-4">
-              <Suspense fallback={
-                <div className="min-h-[40px] flex items-center text-sm text-muted-foreground animate-pulse" role="status">
-                  Carregando busca...
-                </div>
-              }>
-                <SearchBar />
-              </Suspense>
+          <nav className="flex flex-col space-y-4" role="navigation" aria-label="Menu mobile">
+            {/* Barra de Busca Mobile */}
+            <div className="flex justify-center">
+              <div className="w-full max-w-md">
+                <Suspense fallback={
+                  <div className="min-h-[38px] flex items-center text-sm text-muted-foreground animate-pulse" role="status">
+                    Carregando busca...
+                  </div>
+                }>
+                  <SearchBar />
+                </Suspense>
+              </div>
             </div>
-            
+
+            {/* Links do Menu Mobile */}
             <ul className="flex flex-col space-y-2">
-              <li className="w-full">
+              <li>
                 <Link
                   href="/"
-                  className={`block w-full p-3 rounded-lg transition-colors ${
+                  className={`block w-full p-3 rounded-lg transition-all duration-200 hover:bg-secondary/50 hover:scale-[1.02] ${
                     isActive('/') 
-                      ? 'bg-primary/10 text-primary font-medium border-l-4 border-primary pl-2' 
-                      : 'hover:bg-secondary'
+                      ? 'bg-primary/10 text-primary font-semibold border-l-4 border-primary' 
+                      : 'text-foreground'
                   }`}
                   aria-current={isActive('/') ? "page" : undefined}
                 >
                   Início
                 </Link>
               </li>
-              <li className="w-full">
+              <li>
                 <Link
                   href="/blog"
-                  className={`block w-full p-3 rounded-lg transition-colors ${
+                  className={`block w-full p-3 rounded-lg transition-all duration-200 hover:bg-secondary/50 hover:scale-[1.02] ${
                     isActive('/blog') 
-                      ? 'bg-primary/10 text-primary font-medium border-l-4 border-primary pl-2' 
-                      : 'hover:bg-secondary'
+                      ? 'bg-primary/10 text-primary font-semibold border-l-4 border-primary' 
+                      : 'text-foreground'
                   }`}
                   aria-current={isActive('/blog') ? "page" : undefined}
                 >
