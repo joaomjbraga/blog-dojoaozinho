@@ -6,7 +6,7 @@ tags: ["linux", "arch", "ssd", "trim", "desempenho"]
 coverImage: "https://cdn.hashnode.com/res/hashnode/image/upload/v1650988868553/fHW_rgPTg.jpg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp"
 author:
   name: "João Marcos"
-  image: "/authors/joao-marcos.jpg"
+  image: "https://avatars.githubusercontent.com/u/195451083?v=4"
   bio: "Graduando em Análise e Desenvolvimento de Sistemas na Estácio. Apaixonado por tecnologia, Linux e desenvolvimento web."
 ---
 

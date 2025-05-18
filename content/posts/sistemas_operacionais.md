@@ -8,7 +8,7 @@ tags: ["Sistemas Operacionais", "Kernel", "Linux", "Faculdade", "Estácio"]
 coverImage: "/images/blog/so-interface.png"
 author:
   name: "João Marcos"
-  image: "/authors/joao-marcos.jpg"
+  image: "https://avatars.githubusercontent.com/u/195451083?v=4"
   bio: "Graduando em Análise e Desenvolvimento de Sistemas na Estácio. Apaixonado por tecnologia, Linux e desenvolvimento web."
 
 ---
