@@ -3,9 +3,12 @@ title: "Ativando o TRIM no Arch Linux"
 description: "Como ativar o TRIM para SSDs no Arch Linux e manter o desempenho e a vida útil do disco."
 date: 2025-05-18
 tags: ["linux", "arch", "ssd", "trim", "desempenho"]
+coverImage: "https://cdn.hashnode.com/res/hashnode/image/upload/v1650988868553/fHW_rgPTg.jpg?w=1600&h=840&fit=crop&crop=entropy&auto=compress,format&format=webp"
+author:
+  name: "João Marcos"
+  image: "/authors/joao-marcos.jpg"
+  bio: "Graduando em Análise e Desenvolvimento de Sistemas na Estácio. Apaixonado por tecnologia, Linux e desenvolvimento web."
 ---
-
-# 🚀 Ativando o TRIM no Arch Linux
 
 O **TRIM** é uma funcionalidade essencial para quem utiliza **SSDs** no Linux. Ele permite que o sistema operacional informe ao SSD quais blocos de dados não são mais utilizados, ajudando a manter a performance e prolongar a vida útil do disco.
 

@@ -1,12 +1,17 @@
 ---
 title: "Conceitos Básicos de Sistemas Operacionais"
+slug: "conceitos-basicos-sistemas-operacionais"
+excerpt: "Conheça os fundamentos essenciais dos sistemas operacionais: histórico, funções, kernel, tipos e uma introdução prática ao Linux."
 description: "Explore os fundamentos de Sistemas Operacionais: história, tipos, arquitetura, kernel, chamadas de sistema e o uso prático do Linux."
 date: "2025-05-18"
 tags: ["Sistemas Operacionais", "Kernel", "Linux", "Faculdade", "Estácio"]
-image: "/images/blog/so-interface.png"
----
+coverImage: "/images/blog/so-interface.png"
+author:
+  name: "João Marcos"
+  image: "/authors/joao-marcos.jpg"
+  bio: "Graduando em Análise e Desenvolvimento de Sistemas na Estácio. Apaixonado por tecnologia, Linux e desenvolvimento web."
 
-![Capa - Sistemas Operacionais](/images/blog/so-interface.png)
+---
 
 ## 🧠 O que é um Sistema Operacional?
 

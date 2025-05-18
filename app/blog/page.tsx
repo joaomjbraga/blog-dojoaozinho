@@ -13,34 +13,34 @@ export default async function BlogPage() {
   const posts = await getAllPosts()
 
   return (
-    <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen">
-      <section className="space-y-4 mb-12">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+    <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 min-h-screen">
+      <section className="space-y-3 sm:space-y-4 mb-8 sm:mb-10 lg:mb-12">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
           Blog
         </h1>
-        <p className="text-muted-foreground text-base sm:text-lg max-w-3xl leading-relaxed">
+        <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl leading-relaxed">
           Navegue por todos os posts do blog
         </p>
       </section>
 
       <Suspense 
         fallback={
-          <div role="status" className="flex items-center justify-center p-4 rounded-lg bg-muted/50">
+          <div role="status" className="flex items-center justify-center p-3 sm:p-4 rounded-lg bg-muted/50">
             <span className="sr-only">Carregando busca</span>
             <div className="animate-pulse flex items-center gap-2">
-              <div className="h-4 w-4 rounded-full bg-muted-foreground animate-spin"></div>
-              <span className="text-muted-foreground">Carregando busca...</span>
+              <div className="h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-muted-foreground animate-spin"></div>
+              <span className="text-sm sm:text-base text-muted-foreground">Carregando busca...</span>
             </div>
           </div>
         }
       >
-        <div className="max-w-2xl mx-auto mb-12">
+        <div className="w-full max-w-2xl mx-auto mb-8 sm:mb-10 lg:mb-12 px-2 sm:px-0">
           <SearchBar />
         </div>
       </Suspense>
 
-      <section aria-label="Lista de posts" className="space-y-8">
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <section aria-label="Lista de posts" className="space-y-6 sm:space-y-8">
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
           {posts.map((post) => (
             <article 
               key={post.slug}
@@ -51,7 +51,7 @@ export default async function BlogPage() {
           ))}
         </div>
         {posts.length === 0 && (
-          <p className="text-center text-muted-foreground py-8">
+          <p className="text-center text-sm sm:text-base text-muted-foreground py-6 sm:py-8">
             Nenhum post encontrado
           </p>
         )}

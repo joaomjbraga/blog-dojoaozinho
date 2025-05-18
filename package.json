@@ -1,7 +1,9 @@
 {
-  "name": "my-v0-project",
-  "version": "0.1.0",
+  "name": "blog-do-joaozinho",
+  "version": "1.0.0",
   "private": true,
+  "description": "A blog about the world of programming",
+  "author": "João M J Braga <joomdeveloper.app@gmail.com>",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

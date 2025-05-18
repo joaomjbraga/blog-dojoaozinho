@@ -8,9 +8,17 @@ const postsDirectory = path.join(process.cwd(), "content/posts")
 export interface Post {
   slug: string
   title: string
-  date?: string
-  excerpt?: string
+  date: string // Não mais opcional
+  excerpt: string // Não mais opcional
   content: string
+  coverImage?: string
+  tags?: string[]
+  author?: Author
+  image?: string
+}
+
+export interface Author {
+  name: string
   image?: string
 }
 
@@ -70,9 +78,12 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     return {
       slug,
       title: data.title || slug,
-      date: data.date ? new Date(data.date).toISOString() : undefined,
-      excerpt: data.excerpt || content.substring(0, 150) + "...",
+      date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(), // Garantir que date nunca seja undefined
+      excerpt: data.excerpt || content.substring(0, 150) + "...", // Garantir que excerpt nunca seja undefined
       content: content,
+      coverImage: data.coverImage || undefined,
+      tags: data.tags || undefined,
+      author: data.author || undefined,
       image: data.image || undefined,
     }
   } catch (error) {

@@ -1,31 +1,40 @@
+import { Instagram, Linkedin, Github } from "lucide-react"
+
 export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t w-full bg-background" role="contentinfo">
-      <div className="container mx-auto px-4 py-6 sm:py-8 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6">
-        <div className="flex flex-col items-center md:items-start space-y-3 sm:space-y-4 w-full md:w-auto">
-          <p className="text-xs sm:text-sm text-muted-foreground text-center md:text-left">
+    <footer className="border-t border-gray-200 dark:border-gray-800 w-full bg-background" role="contentinfo">
+      <div className="container mx-auto px-2 xs:px-3 sm:px-6 lg:px-8 py-3 xs:py-4 sm:py-6 lg:py-8 flex flex-col md:flex-row justify-between items-center gap-2 xs:gap-3 sm:gap-4 lg:gap-6">
+        <div className="flex flex-col items-center md:items-start space-y-1 xs:space-y-2 sm:space-y-3 w-full md:w-auto">
+          <p className="text-[10px] xs:text-[11px] sm:text-sm lg:text-base text-gray-500 dark:text-gray-400 text-center md:text-left font-sans max-w-[240px] xs:max-w-[280px] sm:max-w-none">
             © {year} João M J Braga. Todos os direitos reservados.
           </p>
-          <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
-            <a href="#" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors">
-              Política de Privacidade
-            </a>
-            <a href="#" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors">
-              Termos de Uso
-            </a>
-          </div>
         </div>
-        <div className="flex items-center space-x-4 sm:space-x-6">
-          <a target="_blank" href="https://instagram.com/joaomjbraga" className="text-muted-foreground hover:text-primary transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        <div className="flex items-center gap-2 xs:gap-3 sm:gap-4 lg:gap-5">
+          <a 
+            target="_blank" 
+            href="https://instagram.com/joaomjbraga" 
+            className="text-gray-500 hover:text-lime-600 dark:hover:text-lime-400 hover:bg-lime-50/50 dark:hover:bg-lime-950/50 p-0.5 xs:p-1 sm:p-1.5 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 hover:scale-110" 
+            aria-label="Visitar perfil do Instagram de João M J Braga"
+          >
+            <Instagram className="h-3 w-3 xs:h-4 xs:w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
           </a>
-          <a target="_blank" href="https://linkedin.com/in/joaomjbraga" className="text-muted-foreground hover:text-primary transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+          <a 
+            target="_blank" 
+            href="https://linkedin.com/in/joaomjbraga" 
+            className="text-gray-500 hover:text-lime-600 dark:hover:text-lime-400 hover:bg-lime-50/50 dark:hover:bg-lime-950/50 p-0.5 xs:p-1 sm:p-1.5 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 hover:scale-110" 
+            aria-label="Visitar perfil do LinkedIn de João M J Braga"
+          >
+            <Linkedin className="h-3 w-3 xs:h-4 xs:w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
           </a>
-          <a target="_blank" href="https://github.com/joaomjbraga" className="text-muted-foreground hover:text-primary transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <a 
+            target="_blank" 
+            href="https://github.com/joaomjbraga" 
+            className="text-gray-500 hover:text-lime-600 dark:hover:text-lime-400 hover:bg-lime-50/50 dark:hover:bg-lime-950/50 p-0.5 xs:p-1 sm:p-1.5 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 hover:scale-110" 
+            aria-label="Visitar perfil do GitHub de João M J Braga"
+          >
+            <Github className="h-3 w-3 xs:h-4 xs:w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
           </a>
         </div>
       </div>
