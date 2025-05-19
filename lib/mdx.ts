@@ -1,3 +1,5 @@
+'use server'
+
 import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
@@ -79,7 +81,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       slug,
       title: data.title || slug,
       date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(), // Garantir que date nunca seja undefined
-      excerpt: data.excerpt || content.substring(0, 150) + "...", // Garantir que excerpt nunca seja undefined
+      excerpt: data.excerpt || content.substring(0, 150) + "...", // Garantir que excerpt nunca nunca undefined
       content: content,
       coverImage: data.coverImage || undefined,
       tags: data.tags || undefined,
@@ -103,7 +105,6 @@ excerpt: My first blog post
 ---
 
 # Hello World
-
 This is my first blog post. Welcome to my blog!
 
 ## What to expect
@@ -127,7 +128,7 @@ excerpt: Learn how to build modern web applications with Next.js
 
 # Getting Started with Next.js
 
-Next.js is a React framework that enables functionality such as server-side rendering and static site generation.
+Next.js is a React framework that enables functionality such as server-side rendering and static static generation.
 
 ## Why Next.js?
 

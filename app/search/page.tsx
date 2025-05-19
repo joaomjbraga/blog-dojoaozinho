@@ -39,7 +39,7 @@ export default function SearchPage() {
     <main className="min-h-screen w-full flex items-center justify-center px-4 py-12 sm:py-16" role="main">
       <div className="w-full max-w-6xl mx-auto space-y-10">
         <section 
-          className="space-y-6 text-center" 
+          className="space-y-6 text-center md:hidden" 
           aria-label="Área de busca"
         >
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">

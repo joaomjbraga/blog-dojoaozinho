@@ -77,14 +77,6 @@ export default function Header() {
               >
                 Início
               </Link>
-              <Link 
-                href="/blog" 
-                className={`relative px-3 py-1 text-sm font-medium transition-all duration-200 rounded-md hover:bg-secondary/50 hover:scale-105
-                  ${isActive('/blog') ? 'text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary after:scale-x-100 after:transition-transform after:duration-300' : 'hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary after:scale-x-0 after:transition-transform after:duration-300'}`}
-                aria-current={isActive('/blog') ? "page" : undefined}
-              >
-                Blog
-              </Link>
               <ThemeToggle />
             </nav>
           </div>
@@ -141,19 +133,6 @@ export default function Header() {
                   aria-current={isActive('/') ? "page" : undefined}
                 >
                   Início
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/blog"
-                  className={`block w-full p-3 rounded-lg transition-all duration-200 hover:bg-secondary/50 hover:scale-[1.02] ${
-                    isActive('/blog') 
-                      ? 'bg-primary/10 text-primary font-semibold border-l-4 border-primary' 
-                      : 'text-foreground'
-                  }`}
-                  aria-current={isActive('/blog') ? "page" : undefined}
-                >
-                  Blog
                 </Link>
               </li>
             </ul>
