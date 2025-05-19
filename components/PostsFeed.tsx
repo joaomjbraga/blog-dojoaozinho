@@ -68,6 +68,11 @@ export function PostsFeed() {
 
   return (
     <div className="container max-w-[2400px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 md:py-12 space-y-8 md:space-y-10">
+      <div className="flex items-center justify-center space-x-4 xs:space-x-6 sm:space-x-8">
+        <span className="h-[2px] w-8 xs:w-12 sm:w-20 bg-gradient-to-r from-green-500/70 via-lime-500/70 to-transparent rounded-full"></span>
+        <h2 className="text-base xs:text-lg sm:text-2xl font-semibold text-slate-800 dark:text-slate-100 px-3 xs:px-4 py-2 backdrop-blur-sm bg-white/10 rounded-full border border-slate-200/20 shadow-lg">Últimas Postagens</h2>
+        <span className="h-[2px] w-8 xs:w-12 sm:w-20 bg-gradient-to-l from-green-500/70 via-lime-500/70 to-transparent rounded-full"></span>
+      </div>
 
       {error && (
         <motion.div
