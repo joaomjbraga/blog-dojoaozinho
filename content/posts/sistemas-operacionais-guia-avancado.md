@@ -1,8 +1,8 @@
 ---
 slug: "sistemas-operacionais-so"
-title: "Sistemas Operacionais SO"
+title: "Sistemas Operacionais - Parte 1: Conceitos Básicos"
 date: "2025-05-20"
-excerpt: "Explore em profundidade o universo dos sistemas operacionais: suas funções, componentes, tipos, gerenciamento de processos, memória, arquivos, dispositivos e segurança."
+excerpt: "Entenda os conceitos fundamentais de um sistema operacional."
 coverImage: "https://www.i-aida.org/wp-content/uploads/2021/03/photo-main@3x-3.jpg"
 tags: ["sistemas operacionais", "gerenciamento", "processos", "memória", "arquivos", "dispositivos", "segurança"]
 author:

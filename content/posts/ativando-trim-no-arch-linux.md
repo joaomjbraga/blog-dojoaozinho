@@ -1,9 +1,9 @@
 ---
 title: "Como Ativar o TRIM no Arch Linux"
-description: "Aprenda a ativar o TRIM no Arch Linux para otimizar o desempenho e a durabilidade do seu SSD."
+excerpt: "Aprenda a ativar o TRIM no Arch Linux para otimizar o desempenho e a durabilidade do seu SSD."
 date: 2025-05-18
 tags: ["linux", "arch", "ssd", "trim", "desempenho"]
-coverImage: "https://img.freepik.com/free-vector/digital-connection-gradient-minimalist-design_483537-2906.jpg"
+coverImage: "https://img.freepik.com/fotos-premium/disco-rigido-de-computador-drives-hdd-ssd-na-placa-de-circuito-fundo-da-placa-mae_150455-1993.jpg"
 author:
   name: "João Marcos"
   image: "https://avatars.githubusercontent.com/u/195451083?v=4"
