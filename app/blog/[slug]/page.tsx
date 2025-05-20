@@ -40,103 +40,112 @@ export default async function PostPage({ params }: Params) {
   }
 
   return (
-    <article className="min-h-screen w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-lime-50 via-white to-gray-50 dark:from-lime-950 dark:via-gray-900 dark:to-gray-800">
-      <div className="container mx-auto px-2 xs:px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 lg:py-8">
-        <div className="mx-auto max-w-4xl xl:max-w-5xl backdrop-blur-xl bg-white/70 dark:bg-gray-900/50 rounded-xl xs:rounded-2xl lg:rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] p-2 xs:p-3 sm:p-4 md:p-6 lg:p-8 border border-lime-200/60 dark:border-lime-900/60">
-          <Link 
-            href="/" 
-            className="group mb-4 sm:mb-6 inline-flex items-center gap-1 xs:gap-1.5 text-[0.7rem] xs:text-sm sm:text-base font-medium text-lime-600 hover:text-lime-700 dark:text-lime-400 dark:hover:text-lime-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-full px-3 xs:px-4 py-1.5 xs:py-2 hover:bg-lime-50/70 dark:hover:bg-lime-950/70 backdrop-blur-sm hover:backdrop-blur-lg shadow-lg hover:shadow-xl border border-lime-200/60 dark:border-lime-800/60"
-            aria-label="Voltar para a página do blog"
-          >
-            <ArrowLeft className="h-3 w-3 xs:h-4 xs:w-4 sm:h-5 sm:w-5 transition-transform group-hover:-translate-x-2" />
-            <span>Voltar</span>
-          </Link>
+    <article className="min-h-screen w-full bg-background">
+      {/* Decorative header gradient */}
+      <div className="h-24 xs:h-32 sm:h-40 md:h-48 w-full bg-gradient-to-r from-primary/20 via-secondary/10 to-accent/10 dark:from-primary/10 dark:via-secondary/5 dark:to-accent/5"></div>
+      
+      <div className="container mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 -mt-16 xs:-mt-20 sm:-mt-24 md:-mt-28">
+        <div className="mx-auto max-w-4xl bg-card dark:bg-card shadow-sm dark:shadow-md rounded-xl border border-border dark:border-border/50 overflow-hidden">
+          {/* Back button */}
+          <div className="px-4 xs:px-6 pt-4 xs:pt-6">
+            <Link 
+              href="/" 
+              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
+              aria-label="Voltar para a página do blog"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>Voltar</span>
+            </Link>
+          </div>
           
-          <h1 className="mb-4 sm:mb-6 text-lg xs:text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-black tracking-tight font-sans leading-[1.1] bg-clip-text text-transparent bg-gradient-to-r from-lime-600 via-green-500 to-emerald-600 dark:from-lime-400 dark:via-green-300 dark:to-emerald-400 drop-shadow-lg">
-            {post.title}
-          </h1>
-          
-          <div className="mb-6 sm:mb-8">
-            <div className="relative overflow-hidden p-2 xs:p-3 sm:p-4 md:p-6 bg-gradient-to-br from-white/90 to-lime-50/90 dark:from-gray-800/90 dark:to-lime-950/90 rounded-xl xs:rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 backdrop-blur-xl border border-lime-200/60 dark:border-lime-800/60 group">
-              <div className="absolute inset-0 bg-gradient-to-r from-lime-400/10 to-green-400/10 dark:from-lime-500/20 dark:to-green-500/20 transform rotate-180 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              <div className="relative z-10 flex flex-col xs:flex-row items-start xs:items-center gap-3 sm:gap-4 md:gap-6">
-                {post.author && post.author.image && (
-                  <div className="relative h-14 w-14 xs:h-16 xs:w-16 sm:h-20 sm:w-20 group/image transform hover:scale-105 transition-transform duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-br from-lime-400 to-green-400 dark:from-lime-500 dark:to-green-500 rounded-lg xs:rounded-xl rotate-6 group-hover/image:rotate-12 transition-transform duration-500 animate-pulse"></div>
-                    <div className="relative h-14 w-14 xs:h-16 xs:w-16 sm:h-20 sm:w-20 overflow-hidden rounded-lg xs:rounded-xl ring-4 ring-white/90 dark:ring-gray-800/80 shadow-2xl">
-                      <Image
-                        src={post.author.image}
-                        alt={post.author.name || "Foto do autor"}
-                        fill
-                        className="object-cover transform hover:scale-110 transition-transform duration-500 filter saturate-110"
-                        sizes="(max-width: 480px) 56px, (max-width: 768px) 64px, 80px"
-                        priority
-                      />
-                    </div>
-                  </div>
+          {/* Article content */}
+          <div className="px-4 xs:px-6 sm:px-8 md:px-10 py-4 xs:py-6 sm:py-8">
+            {/* Title */}
+            <h1 className="mb-4 xs:mb-6 text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+              {post.title}
+            </h1>
+            
+            {/* Author and metadata */}
+            <div className="mb-6 xs:mb-8 flex items-center gap-3 xs:gap-4 pb-4 xs:pb-6 border-b border-border/50">
+              {post.author && post.author.image && (
+                <div className="relative h-10 w-10 xs:h-12 xs:w-12 rounded-full overflow-hidden border-2 border-primary/20">
+                  <Image
+                    src={post.author.image}
+                    alt={post.author.name || "Foto do autor"}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 480px) 40px, 48px"
+                    priority
+                  />
+                </div>
+              )}
+              
+              <div className="flex flex-col">
+                {post.author && (
+                  <p className="text-sm font-medium text-foreground">
+                    {post.author.name}
+                  </p>
                 )}
-                <div className="flex flex-col gap-2 sm:gap-3 flex-grow">
-                  {post.author && (
-                    <div className="flex items-center gap-1.5 xs:gap-2 bg-white/70 dark:bg-gray-800/50 rounded-full px-3 xs:px-4 py-1 xs:py-1.5 backdrop-blur-sm shadow-lg inline-flex self-start">
-                      <User className="h-3 w-3 xs:h-3.5 xs:w-3.5 sm:h-4 sm:w-4 text-lime-600 dark:text-lime-400 animate-pulse" />
-                      <p className="text-xs xs:text-sm sm:text-base font-bold bg-gradient-to-r from-lime-600 to-green-600 dark:from-lime-400 dark:to-green-400 bg-clip-text text-transparent">
-                        {post.author.name}
-                      </p>
-                    </div>
-                  )}
-                  <div className="flex flex-wrap items-center gap-1.5 xs:gap-2">
-                    <div className="flex items-center gap-1 xs:gap-1.5 bg-white/50 dark:bg-gray-800/30 rounded-full px-2 xs:px-3 py-1 xs:py-1.5 backdrop-blur-sm">
-                      <Calendar className="h-3 w-3 xs:h-3.5 xs:w-3.5 sm:h-4 sm:w-4 text-lime-600/80 dark:text-lime-400/80" />
-                      <time 
-                        dateTime={post.date}
-                        className="text-[0.65rem] xs:text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300"
-                      >
-                        {formatDate(post.date)}
-                      </time>
-                    </div>
-                    <div className="flex items-center gap-1 xs:gap-1.5 bg-white/50 dark:bg-gray-800/30 rounded-full px-2 xs:px-3 py-1 xs:py-1.5 backdrop-blur-sm">
-                      <Clock className="h-3 w-3 xs:h-3.5 xs:w-3.5 sm:h-4 sm:w-4 text-lime-600/80 dark:text-lime-400/80" />
-                      <span className="text-[0.65rem] xs:text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
-                        5 min leitura
-                      </span>
-                    </div>
+                
+                <div className="flex items-center gap-3 xs:gap-4 text-xs text-muted-foreground mt-1">
+                  <div className="flex items-center gap-1.5">
+                    <Calendar className="h-3.5 w-3.5" />
+                    <time dateTime={post.date}>
+                      {formatDate(post.date)}
+                    </time>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Clock className="h-3.5 w-3.5" />
+                    <span>5 min leitura</span>
                   </div>
                 </div>
               </div>
             </div>
+            
+            {/* Tags */}
+            {post.tags && post.tags.length > 0 && (
+              <div className="mb-6 xs:mb-8 flex flex-wrap gap-2">
+                {post.tags.map((tag: string) => (
+                  <span 
+                    key={tag}
+                    className="inline-flex items-center rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-primary hover:bg-muted/80 transition-colors duration-200 cursor-pointer"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+            
+            {/* Content */}
+            <div className="prose prose-xs xs:prose-sm sm:prose-base lg:prose-lg max-w-none dark:prose-invert
+              prose-headings:font-bold prose-headings:text-foreground prose-headings:leading-tight
+              prose-p:text-foreground/90 prose-p:leading-relaxed
+              prose-a:text-primary prose-a:no-underline prose-a:transition-colors hover:prose-a:text-primary/80
+              prose-img:rounded-md prose-img:shadow-sm prose-img:w-full prose-img:max-w-full
+              prose-strong:text-foreground prose-strong:font-semibold
+              prose-code:text-primary prose-code:bg-muted prose-code:rounded-md prose-code:px-1.5 prose-code:py-0.5
+              prose-blockquote:border-l-4 prose-blockquote:border-primary/30 prose-blockquote:bg-muted/50 prose-blockquote:rounded-sm
+              [&_table]:border-collapse [&_table]:w-full [&_table]:overflow-x-auto [&_table]:block [&_table]:max-w-full
+              [&_th]:p-2 [&_th]:text-left [&_th]:text-xs [&_th]:xs:text-sm [&_th]:font-medium [&_th]:text-foreground [&_th]:bg-muted/50 [&_th]:whitespace-nowrap
+              [&_td]:p-2 [&_td]:text-xs [&_td]:xs:text-sm [&_td]:text-foreground/80 [&_td]:border-t [&_td]:border-border/30 [&_td]:whitespace-nowrap">
+              <Mdx code={post.content} />
+            </div>
           </div>
           
-          {post.tags && post.tags.length > 0 && (
-            <div className="mb-6 sm:mb-8 flex flex-wrap gap-1.5 xs:gap-2">
-              {post.tags.map((tag: string) => (
-                <span 
-                  key={tag}
-                  className="inline-flex items-center gap-1 xs:gap-1.5 rounded-full bg-gradient-to-br from-white/90 to-lime-50/90 dark:from-gray-800/80 dark:to-lime-950/80 px-2 xs:px-3 py-1 xs:py-1.5 text-[0.65rem] xs:text-xs sm:text-sm font-semibold text-lime-700 dark:text-lime-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer backdrop-blur-sm border border-lime-200/60 dark:border-lime-900/60 hover:bg-white/70 dark:hover:bg-gray-800/50"
-                  role="tag"
-                >
-                  #{tag}
-                </span>
-              ))}
+          {/* Footer */}
+          <div className="px-4 xs:px-6 sm:px-8 md:px-10 py-4 xs:py-6 bg-muted/30 dark:bg-muted/10 border-t border-border/50">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 xs:gap-4">
+              <p className="text-xs xs:text-sm text-muted-foreground">
+                Obrigado por ler este artigo!
+              </p>
+              <Link 
+                href="/" 
+                className="inline-flex items-center gap-2 text-xs xs:text-sm font-medium text-primary hover:text-primary/80 transition-colors duration-200"
+              >
+                <span>Ver mais artigos</span>
+                <ArrowLeft className="h-4 w-4 rotate-180" />
+              </Link>
             </div>
-          )}
-          
-          <div className="prose prose-xs xs:prose-sm sm:prose-base lg:prose-lg max-w-none dark:prose-invert font-sans overflow-x-auto
-            prose-headings:font-black prose-headings:text-transparent prose-headings:bg-clip-text prose-headings:bg-gradient-to-r prose-headings:from-lime-600 prose-headings:via-green-500 prose-headings:to-emerald-600 dark:prose-headings:from-lime-400 dark:prose-headings:via-green-300 dark:prose-headings:to-emerald-400 prose-headings:leading-tight
-            prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed
-            prose-a:text-lime-600 prose-a:no-underline prose-a:transition-all hover:prose-a:text-lime-700 
-            dark:prose-a:text-lime-400 dark:hover:prose-a:text-lime-300 
-            prose-a:focus:outline-none prose-a:focus:ring-2 prose-a:focus:ring-lime-500 prose-a:focus:ring-offset-2 
-            dark:prose-a:focus:ring-offset-gray-900
-            prose-img:rounded-xl xs:prose-img:rounded-2xl prose-img:shadow-2xl prose-img:ring-4 prose-img:ring-white/90 dark:prose-img:ring-gray-800 prose-img:transition-all prose-img:duration-500 hover:prose-img:transform hover:prose-img:scale-[1.02]
-            prose-strong:text-lime-700 dark:prose-strong:text-lime-300 prose-strong:font-bold
-            prose-code:text-lime-600 dark:prose-code:text-lime-400 prose-code:bg-black/70 dark:prose-code:bg-gray-800/50 prose-code:rounded-lg prose-code:px-2 prose-code:py-0.5 prose-code:backdrop-blur-sm
-            prose-blockquote:border-l-4 prose-blockquote:border-lime-500 prose-blockquote:bg-gradient-to-br prose-blockquote:from-white/70 prose-blockquote:to-lime-50/70 dark:prose-blockquote:from-gray-800/50 dark:prose-blockquote:to-lime-950/50 prose-blockquote:rounded-lg prose-blockquote:px-3 xs:prose-blockquote:px-4 prose-blockquote:py-2 xs:prose-blockquote:py-3 prose-blockquote:shadow-xl prose-blockquote:backdrop-blur-sm
-            [&_table]:w-full [&_table]:min-w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_table]:divide-y [&_table]:divide-gray-200 dark:[&_table]:divide-gray-700
-            [&_th]:p-2 xs:[&_th]:p-3 [&_th]:text-left [&_th]:text-xs xs:[&_th]:text-sm [&_th]:font-semibold [&_th]:text-gray-900 dark:[&_th]:text-gray-100 [&_th]:bg-gray-50 dark:[&_th]:bg-gray-800
-            [&_td]:p-2 xs:[&_td]:p-3 [&_td]:text-xs xs:[&_td]:text-sm [&_td]:text-gray-700 dark:[&_td]:text-gray-300 [&_td]:align-middle
-            [&_tr]:border-b [&_tr]:border-gray-100 dark:[&_tr]:border-gray-800
-            [&_tbody_tr]:hover:bg-gray-50/50 dark:[&_tbody_tr]:hover:bg-gray-800/50">
-            <Mdx code={post.content} />
           </div>
         </div>
       </div>
