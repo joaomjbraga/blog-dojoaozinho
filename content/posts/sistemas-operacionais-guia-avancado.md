@@ -151,5 +151,3 @@ Os sistemas operacionais são pilares essenciais da computação moderna, possib
 - [Artigo Wikipedia Sistemas Operacionais](https://pt.wikipedia.org/wiki/Sistema_operacional)
 
 ---
-
-**Quer que eu prepare posts detalhados sobre escalonamento, memória virtual, sistemas de arquivos ou segurança? É só falar!**
