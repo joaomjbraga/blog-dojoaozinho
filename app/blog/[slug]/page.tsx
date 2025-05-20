@@ -6,6 +6,7 @@ import { getPostBySlug } from "@/lib/posts"
 import { formatDate } from "@/lib/utils"
 import { Mdx } from "@/components/mdx"
 import { ArrowLeft, Calendar, User, Clock } from "lucide-react"
+import FloatingActionButton from "@/components/FloatingActionButton"
 
 type Params = {
   params: {
@@ -149,6 +150,7 @@ export default async function PostPage({ params }: Params) {
           </div>
         </div>
       </div>
+      <FloatingActionButton />
     </article>
   )
 }
