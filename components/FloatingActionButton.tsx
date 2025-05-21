@@ -1,12 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import {
-  ArrowUp,
-  Copy,
-  X,
-  Plus,
-} from "lucide-react"
+import { useEffect, useState, useCallback } from "react"
+import { ArrowUp, Copy, X, Plus } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 export default function FloatingActionButton() {
@@ -14,38 +9,53 @@ export default function FloatingActionButton() {
   const [showScrollButton, setShowScrollButton] = useState(false)
   const [copied, setCopied] = useState(false)
 
+  // Handle scroll with debounce via requestAnimationFrame for better perf
   useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollButton(window.scrollY > 200)
+    let ticking = false
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setShowScrollButton(window.scrollY > 200)
+          ticking = false
+        })
+        ticking = true
+      }
     }
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener("scroll", onScroll)
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" })
-  }
+    setIsOpen(false)
+  }, [])
 
-  const copyLink = async () => {
+  const copyLink = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(window.location.href)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
+      setIsOpen(false)
     } catch (error) {
-      console.error('Falha ao copiar link:', error)
+      console.error("Falha ao copiar link:", error)
     }
-  }
+  }, [])
 
   const actions = [
-    ...(showScrollButton ? [{
-      icon: <ArrowUp size={18} />,
-      label: "Topo",
-      onClick: scrollToTop,
-    }] : []),
+    ...(showScrollButton
+      ? [
+          {
+            icon: <ArrowUp size={18} />,
+            label: "Ir para o topo",
+            onClick: scrollToTop,
+          },
+        ]
+      : []),
     {
       icon: <Copy size={18} />,
-      label: "Compartilhar",
+      label: "Copiar link",
       onClick: copyLink,
     },
   ]
@@ -62,8 +72,13 @@ export default function FloatingActionButton() {
             transition={{ duration: 0.3 }}
             role="alert"
             aria-live="assertive"
-            className="fixed top-5 right-5 z-50 rounded-md bg-green-600 px-5 py-3 text-white shadow-lg ring-1 ring-green-400/50
-              dark:bg-green-500 dark:ring-green-300/70 select-none font-semibold text-sm"
+            className="
+              fixed top-5 right-5 z-50
+              rounded-md bg-green-600 px-5 py-3
+              text-white shadow-lg ring-1 ring-green-400/50
+              dark:bg-green-500 dark:ring-green-300/70
+              select-none font-semibold text-sm
+            "
           >
             Link copiado!
           </motion.div>
@@ -75,7 +90,7 @@ export default function FloatingActionButton() {
           {isOpen &&
             actions.map((action, i) => (
               <motion.button
-                key={i}
+                key={action.label}
                 initial={{ opacity: 0, scale: 0.8, y: 12 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.8, y: 12 }}
@@ -99,8 +114,10 @@ export default function FloatingActionButton() {
                   whitespace-nowrap
                   text-xs md:text-sm
                   font-medium
+                  focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
                 "
                 title={action.label}
+                aria-label={action.label}
               >
                 {action.icon}
                 <span>{action.label}</span>
@@ -109,7 +126,8 @@ export default function FloatingActionButton() {
         </AnimatePresence>
 
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen((open) => !open)}
+          aria-expanded={isOpen}
           aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
           className="
             p-3 md:p-4

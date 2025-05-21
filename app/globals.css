@@ -56,3 +56,31 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* MacOS Window Styles */
+@layer components {
+  .mac-window {
+    @apply transition-all duration-200;
+  }
+  
+  .mac-window-header {
+    @apply border-b border-border/30;
+  }
+  
+  .mac-window-content pre {
+    @apply m-0 p-0 bg-transparent;
+  }
+  
+  .mac-window-content code {
+    @apply font-mono text-sm leading-relaxed;
+  }
+  
+  /* Override prose styles for code blocks inside MacOS windows */
+  .prose .mac-window pre {
+    @apply bg-transparent m-0 p-0;
+  }
+  
+  .prose .mac-window code {
+    @apply bg-transparent px-0 py-0 text-foreground/90 dark:text-foreground/80;
+  }
+}

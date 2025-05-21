@@ -7,7 +7,7 @@ export async function GET(request: Request) {
     const page = parseInt(searchParams.get("page") || "1", 10)
     const limit = parseInt(searchParams.get("limit") || "6", 10)
 
-    // Validação de parâmetros
+    // Validação
     if (isNaN(page) || page < 1) {
       return NextResponse.json(
         { error: "Parâmetro 'page' inválido" },
@@ -23,14 +23,19 @@ export async function GET(request: Request) {
     }
 
     const allPosts = await getAllPosts()
+    const total = allPosts.length
     const start = (page - 1) * limit
-    const end = start + limit
+    const end = page * limit
     const posts = allPosts.slice(start, end)
+
+    const hasMore = end < total
 
     return NextResponse.json({
       posts,
-      hasMore: end < allPosts.length,
-      total: allPosts.length
+      hasMore,
+      total,
+      page,
+      limit,
     })
   } catch (error) {
     console.error("Erro ao processar requisição:", error)

@@ -40,6 +40,9 @@ export default async function PostPage({ params }: Params) {
     notFound()
   }
 
+  const wordCount = post.content.split(/\s+/).length
+  const readingTime = Math.ceil(wordCount / 200) // Assumindo 200 palavras por minuto
+
   return (
     <article className="min-h-screen w-full bg-background">
       {/* Decorative header gradient */}
@@ -97,7 +100,7 @@ export default async function PostPage({ params }: Params) {
                   </div>
                   <div className="flex items-center gap-1.5">
                     <Clock className="h-3.5 w-3.5" />
-                    <span>5 min leitura</span>
+                    <span>{readingTime} min leitura</span>
                   </div>
                 </div>
               </div>
@@ -124,11 +127,12 @@ export default async function PostPage({ params }: Params) {
               prose-a:text-primary prose-a:no-underline prose-a:transition-colors hover:prose-a:text-primary/80
               prose-img:rounded-md prose-img:shadow-sm prose-img:w-full prose-img:max-w-full
               prose-strong:text-foreground prose-strong:font-semibold
-              prose-code:text-primary  prose-code:rounded-md prose-code:px-1.5 prose-code:py-0.5
+              prose-code:text-primary prose-code:rounded-md prose-code:px-1.5 prose-code:py-0.5
               prose-blockquote:border-l-4 prose-blockquote:border-primary/30 prose-blockquote:bg-muted/50 prose-blockquote:rounded-sm
               [&_table]:border-collapse [&_table]:w-full [&_table]:overflow-x-auto [&_table]:block [&_table]:max-w-full
               [&_th]:p-2 [&_th]:text-left [&_th]:text-xs [&_th]:xs:text-sm [&_th]:font-medium [&_th]:text-foreground [&_th]:bg-muted/50 [&_th]:whitespace-nowrap
-              [&_td]:p-2 [&_td]:text-xs [&_td]:xs:text-sm [&_td]:text-foreground/80 [&_td]:border-t [&_td]:border-border/30 [&_td]:whitespace-nowrap">
+              [&_td]:p-2 [&_td]:text-xs [&_td]:xs:text-sm [&_td]:text-foreground/80 [&_td]:border-t [&_td]:border-border/30 [&_td]:whitespace-nowrap
+              [&_.mac-window]:my-6 [&_.mac-window]:shadow-lg">
               <Mdx code={post.content} />
             </div>
           </div>

@@ -7,30 +7,26 @@ import { compileMDX } from "next-mdx-remote/rsc"
 
 const postsDirectory = path.join(process.cwd(), "content/posts")
 
+export interface Author {
+  name: string
+  image?: string
+}
+
 export interface Post {
   slug: string
   title: string
-  date: string // Não mais opcional
-  excerpt: string // Não mais opcional
-  content: string
+  date: string // Sempre presente e ISO string
+  excerpt: string // Sempre presente
+  content: string // Conteúdo MDX puro (não compilado)
   coverImage?: string
   tags?: string[]
   author?: Author
   image?: string
 }
 
-export interface Author {
-  name: string
-  image?: string
-}
-
-
 export async function getAllPosts(): Promise<Post[]> {
-  // Create the directory if it doesn't exist
   if (!fs.existsSync(postsDirectory)) {
     fs.mkdirSync(postsDirectory, { recursive: true })
-
-    // Create sample posts if directory was just created
     createSamplePosts()
   }
 
@@ -46,15 +42,9 @@ export async function getAllPosts(): Promise<Post[]> {
       }),
   )
 
-  // Sort posts by date in descending order
   return posts
     .filter((post): post is Post => post !== null)
-    .sort((a, b) => {
-      if (!a.date && !b.date) return 0
-      if (!a.date) return 1
-      if (!b.date) return -1
-      return new Date(b.date).getTime() - new Date(a.date).getTime()
-    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
@@ -63,33 +53,42 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 
     if (!fs.existsSync(fullPath)) {
       fullPath = path.join(postsDirectory, `${slug}.md`)
-
-      if (!fs.existsSync(fullPath)) {
-        return null
-      }
+      if (!fs.existsSync(fullPath)) return null
     }
 
     const fileContents = fs.readFileSync(fullPath, "utf8")
     const { data, content } = matter(fileContents)
 
-    const { content: mdxContent } = await compileMDX({
+    // Apenas para garantir que o conteúdo MDX está correto, não precisamos do conteúdo compilado para retornar aqui
+    // Mas compileMDX pode ser usado para validação e parsing do frontmatter
+    await compileMDX({
       source: content,
       options: { parseFrontmatter: true },
     })
 
+    const dateIso =
+      data.date && !isNaN(new Date(data.date).getTime())
+        ? new Date(data.date).toISOString()
+        : new Date().toISOString()
+
+    const excerpt =
+      typeof data.excerpt === "string"
+        ? data.excerpt
+        : content.substring(0, 150).trim() + "..."
+
     return {
       slug,
-      title: data.title || slug,
-      date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(), // Garantir que date nunca seja undefined
-      excerpt: data.excerpt || content.substring(0, 150) + "...", // Garantir que excerpt nunca nunca undefined
-      content: content,
-      coverImage: data.coverImage || undefined,
-      tags: data.tags || undefined,
-      author: data.author || undefined,
-      image: data.image || undefined,
+      title: typeof data.title === "string" ? data.title : slug,
+      date: dateIso,
+      excerpt,
+      content,
+      coverImage: typeof data.coverImage === "string" ? data.coverImage : undefined,
+      tags: Array.isArray(data.tags) ? data.tags : undefined,
+      author: typeof data.author === "object" ? data.author : undefined,
+      image: typeof data.image === "string" ? data.image : undefined,
     }
   } catch (error) {
-    console.error(`Error processing post ${slug}:`, error)
+    console.error(`Erro ao processar post ${slug}:`, error)
     return null
   }
 }
@@ -184,12 +183,10 @@ MDX is a powerful tool for content creators and developers alike.
     },
   ]
 
-  // Create the content/posts directory if it doesn't exist
   if (!fs.existsSync(postsDirectory)) {
     fs.mkdirSync(postsDirectory, { recursive: true })
   }
 
-  // Write sample posts
   samplePosts.forEach(({ filename, content }) => {
     fs.writeFileSync(path.join(postsDirectory, filename), content)
   })
