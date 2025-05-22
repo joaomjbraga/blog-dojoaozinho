@@ -158,7 +158,8 @@ export default async function PostPage({ params }: Params) {
               [&_table]:border-collapse [&_table]:w-full [&_table]:overflow-x-auto [&_table]:block [&_table]:max-w-full
               [&_th]:p-2 [&_th]:text-left [&_th]:text-xs [&_th]:xs:text-sm [&_th]:font-medium [&_th]:text-foreground [&_th]:bg-muted/50 [&_th]:whitespace-nowrap
               [&_td]:p-2 [&_td]:text-xs [&_td]:xs:text-sm [&_td]:text-foreground/80 [&_td]:border-t [&_td]:border-border/30 [&_td]:whitespace-nowrap
-              [&_.mac-window]:my-6 [&_.mac-window]:shadow-lg">
+              [&_.mac-window]:my-6 [&_.mac-window]:shadow-lg
+              [&_iframe]:w-full [&_iframe]:aspect-video [&_iframe]:max-w-full [&_iframe]:min-w-[200px] [&_iframe]:h-auto [&_iframe]:rounded-md [&_iframe]:shadow-sm">
               <Mdx code={post.content} />
             </div>
           </div>
