@@ -29,6 +29,9 @@ export async function generateMetadata({
   return {
     title: `${post.title} | João M J Braga`,
     description: post.excerpt,
+    icons: {
+      icon: "/favicon.svg",
+    },
   }
 }
 
