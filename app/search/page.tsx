@@ -5,24 +5,47 @@ import { useEffect, useState, useRef } from "react"
 import SearchBar from "@/components/search-bar"
 import type { Post } from "@/lib/mdx"
 import { PostCard } from "@/components/post-card"
+import { Button } from "@/components/ui/button"
+import { X } from "lucide-react"
+
+interface Category {
+  name: string
+  slug: string
+  count: number
+}
 
 export default function SearchPage() {
   const searchParams = useSearchParams()
   const query = searchParams.get("q") || ""
+  const categoryParam = searchParams.get("category") || ""
 
   const [results, setResults] = useState<Post[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [categories, setCategories] = useState<Category[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam)
 
   const abortControllerRef = useRef<AbortController | null>(null)
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Cache simples: Map<query, results>
+  // Cache simples: Map<query+category, results>
   const cacheRef = useRef<Map<string, Post[]>>(new Map())
+
+  // Buscar categorias disponíveis
+  useEffect(() => {
+    fetch('/api/categorias')
+      .then(res => res.json())
+      .then((data: Category[]) => {
+        setCategories(data)
+      })
+      .catch(err => {
+        console.error("Erro ao buscar categorias:", err)
+      })
+  }, [])
 
   useEffect(() => {
     // Se estiver vazio, limpar tudo e sair
-    if (!query.trim()) {
+    if (!query.trim() && !selectedCategory) {
       setResults([])
       setLoading(false)
       setError(null)
@@ -35,9 +58,12 @@ export default function SearchPage() {
     }
 
     debounceTimeoutRef.current = setTimeout(() => {
+      // Construir a chave de cache
+      const cacheKey = `${query}:${selectedCategory}`
+      
       // Se já tem cache, usa direto
-      if (cacheRef.current.has(query)) {
-        setResults(cacheRef.current.get(query) || [])
+      if (cacheRef.current.has(cacheKey)) {
+        setResults(cacheRef.current.get(cacheKey) || [])
         setLoading(false)
         setError(null)
         return
@@ -54,13 +80,19 @@ export default function SearchPage() {
       setLoading(true)
       setError(null)
 
-      fetch(`/api/search?q=${encodeURIComponent(query)}`, { signal: controller.signal })
+      // Construir a URL com os parâmetros
+      let url = `/api/search?q=${encodeURIComponent(query)}`
+      if (selectedCategory) {
+        url += `&category=${encodeURIComponent(selectedCategory)}`
+      }
+
+      fetch(url, { signal: controller.signal })
         .then(res => {
           if (!res.ok) throw new Error(`Erro na requisição: ${res.statusText}`)
           return res.json()
         })
         .then((data: Post[]) => {
-          cacheRef.current.set(query, data)
+          cacheRef.current.set(cacheKey, data)
           setResults(data)
           setLoading(false)
         })
@@ -84,7 +116,39 @@ export default function SearchPage() {
         abortControllerRef.current.abort()
       }
     }
-  }, [query])
+  }, [query, selectedCategory])
+
+  // Função para aplicar filtro de categoria
+  const handleCategoryFilter = (categorySlug: string) => {
+    // Se já está selecionada, remove o filtro
+    if (categorySlug === selectedCategory) {
+      setSelectedCategory("")
+      // Atualiza a URL sem o parâmetro de categoria
+      window.history.pushState(
+        {}, 
+        "", 
+        `/search?q=${encodeURIComponent(query)}`
+      )
+    } else {
+      setSelectedCategory(categorySlug)
+      // Atualiza a URL com o novo parâmetro de categoria
+      window.history.pushState(
+        {}, 
+        "", 
+        `/search?q=${encodeURIComponent(query)}&category=${encodeURIComponent(categorySlug)}`
+      )
+    }
+  }
+
+  // Função para limpar o filtro de categoria
+  const clearCategoryFilter = () => {
+    setSelectedCategory("")
+    window.history.pushState(
+      {}, 
+      "", 
+      `/search?q=${encodeURIComponent(query)}`
+    )
+  }
 
   return (
     <main
@@ -100,6 +164,38 @@ export default function SearchPage() {
             <SearchBar defaultValue={query} aria-label="Campo de busca" />
           </div>
         </section>
+
+        {/* Filtro de categorias */}
+        {categories.length > 0 && (
+          <section className="space-y-4" aria-label="Filtro de categorias">
+            <div className="flex flex-wrap gap-2 justify-center">
+              {categories.map((category) => (
+                <Button
+                  key={category.slug}
+                  variant={selectedCategory === category.slug ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => handleCategoryFilter(category.slug)}
+                  className="rounded-full"
+                >
+                  {category.name} ({category.count})
+                </Button>
+              ))}
+            </div>
+            
+            {selectedCategory && (
+              <div className="flex justify-center">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={clearCategoryFilter}
+                  className="text-muted-foreground flex items-center gap-1"
+                >
+                  <X className="h-4 w-4" /> Limpar filtro de categoria
+                </Button>
+              </div>
+            )}
+          </section>
+        )}
 
         <section className="space-y-8" aria-label="Resultados da busca">
           {loading ? (
@@ -122,6 +218,7 @@ export default function SearchPage() {
             <>
               <p className="text-muted-foreground text-center text-lg" aria-live="polite">
                 Encontrado {results.length} resultado{results.length !== 1 ? "s" : ""} para "{query}"
+                {selectedCategory && " na categoria selecionada"}
               </p>
               <div className="grid gap-6 grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 {results.map((post) => (
@@ -137,7 +234,9 @@ export default function SearchPage() {
               role="status"
               aria-live="polite"
             >
-              Digite algo para começar a busca
+              {query.trim() || selectedCategory ? 
+                "Nenhum resultado encontrado para os critérios de busca" : 
+                "Digite algo para começar a busca"}
             </p>
           )}
         </section>
