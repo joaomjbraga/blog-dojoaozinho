@@ -1,6 +1,5 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Footer from '@/components/Footer'
 import { Metadata } from 'next'
 import { ThemeProvider } from '@/components/theme-provider'
 import Header from '@/components/header'
@@ -10,6 +9,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Blog do Joãozinho - Tecnologia, Linux e Desenvolvimento',
   description: 'Um blog sobre tecnologia, desenvolvimento web, Linux e outros tópicos relacionados à área de TI.',
+  icons: {
+    icon: '/favicon.svg',
+  }
 }
 
 export default function RootLayout({
