@@ -6,12 +6,25 @@ import SearchBar from "@/components/search-bar"
 import type { Post } from "@/lib/mdx"
 import { PostCard } from "@/components/post-card"
 import { Button } from "@/components/ui/button"
-import { X } from "lucide-react"
+import { X, Search, Tag, BookOpen, Code, Music, Camera, Film, Palette, Coffee, Gamepad } from "lucide-react"
 
 interface Category {
   name: string
   slug: string
   count: number
+  icon?: keyof typeof categoryIcons
+}
+
+const categoryIcons = {
+  default: Tag,
+  tech: Code,
+  music: Music,
+  photo: Camera,
+  video: Film,
+  art: Palette,
+  lifestyle: Coffee,
+  games: Gamepad,
+  books: BookOpen
 }
 
 export default function SearchPage() {
@@ -27,11 +40,8 @@ export default function SearchPage() {
 
   const abortControllerRef = useRef<AbortController | null>(null)
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-
-  // Cache simples: Map<query+category, results>
   const cacheRef = useRef<Map<string, Post[]>>(new Map())
 
-  // Buscar categorias disponíveis
   useEffect(() => {
     fetch('/api/categorias')
       .then(res => res.json())
@@ -44,7 +54,6 @@ export default function SearchPage() {
   }, [])
 
   useEffect(() => {
-    // Se estiver vazio, limpar tudo e sair
     if (!query.trim() && !selectedCategory) {
       setResults([])
       setLoading(false)
@@ -52,16 +61,13 @@ export default function SearchPage() {
       return
     }
 
-    // Debounce: cancela timeout anterior
     if (debounceTimeoutRef.current) {
       clearTimeout(debounceTimeoutRef.current)
     }
 
     debounceTimeoutRef.current = setTimeout(() => {
-      // Construir a chave de cache
       const cacheKey = `${query}:${selectedCategory}`
       
-      // Se já tem cache, usa direto
       if (cacheRef.current.has(cacheKey)) {
         setResults(cacheRef.current.get(cacheKey) || [])
         setLoading(false)
@@ -69,7 +75,6 @@ export default function SearchPage() {
         return
       }
 
-      // Cancela fetch anterior se existir
       if (abortControllerRef.current) {
         abortControllerRef.current.abort()
       }
@@ -80,7 +85,6 @@ export default function SearchPage() {
       setLoading(true)
       setError(null)
 
-      // Construir a URL com os parâmetros
       let url = `/api/search?q=${encodeURIComponent(query)}`
       if (selectedCategory) {
         url += `&category=${encodeURIComponent(selectedCategory)}`
@@ -97,17 +101,13 @@ export default function SearchPage() {
           setLoading(false)
         })
         .catch(err => {
-          if (err.name === "AbortError") {
-            // Fetch abortado, não faz nada
-            return
-          }
+          if (err.name === "AbortError") return
           console.error("Erro ao buscar resultados:", err)
           setError("Erro ao buscar resultados. Tente novamente mais tarde.")
           setLoading(false)
         })
-    }, 300) // debounce de 300ms
+    }, 300)
 
-    // Cleanup no useEffect para cancelar debounce e fetch no unmount/query change
     return () => {
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current)
@@ -118,68 +118,64 @@ export default function SearchPage() {
     }
   }, [query, selectedCategory])
 
-  // Função para aplicar filtro de categoria
   const handleCategoryFilter = (categorySlug: string) => {
-    // Se já está selecionada, remove o filtro
     if (categorySlug === selectedCategory) {
       setSelectedCategory("")
-      // Atualiza a URL sem o parâmetro de categoria
-      window.history.pushState(
-        {}, 
-        "", 
-        `/search?q=${encodeURIComponent(query)}`
-      )
+      window.history.pushState({}, "", `/search?q=${encodeURIComponent(query)}`)
     } else {
       setSelectedCategory(categorySlug)
-      // Atualiza a URL com o novo parâmetro de categoria
-      window.history.pushState(
-        {}, 
-        "", 
-        `/search?q=${encodeURIComponent(query)}&category=${encodeURIComponent(categorySlug)}`
-      )
+      window.history.pushState({}, "", `/search?q=${encodeURIComponent(query)}&category=${encodeURIComponent(categorySlug)}`)
     }
   }
 
-  // Função para limpar o filtro de categoria
   const clearCategoryFilter = () => {
     setSelectedCategory("")
-    window.history.pushState(
-      {}, 
-      "", 
-      `/search?q=${encodeURIComponent(query)}`
-    )
+    window.history.pushState({}, "", `/search?q=${encodeURIComponent(query)}`)
   }
 
   return (
-    <main
-      className="min-h-screen w-full flex items-center justify-center px-4 py-12 sm:py-16"
-      role="main"
-    >
-      <div className="w-full max-w-6xl mx-auto space-y-10">
-        <section className="space-y-6 text-center md:hidden" aria-label="Área de busca">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
-            Resultados da Busca
-          </h1>
-          <div className="max-w-2xl mx-auto w-full">
-            <SearchBar defaultValue={query} aria-label="Campo de busca" />
+    <main className="min-h-screen w-full bg-gradient-to-br from-background via-primary/5 to-muted/20 px-2 sm:px-4 py-8 sm:py-12">
+      <div className="w-full max-w-7xl mx-auto space-y-8">
+        <section className="relative space-y-6" aria-label="Área de busca">
+          <div className="text-center space-y-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary/80 to-primary/60">
+                Explore o Conteúdo
+              </span>
+            </h1>
+            <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
+              Encontre artigos, tutoriais e recursos sobre seus temas favoritos
+            </p>
+          </div>
+          <div className="max-w-2xl mx-auto w-full sm:hidden">
+            <div className="backdrop-blur-md bg-background/90 rounded-2xl p-4 shadow-xl border border-primary/10 hover:border-primary/20 transition-all duration-300">
+              <SearchBar defaultValue={query} aria-label="Campo de busca" />
+            </div>
           </div>
         </section>
 
-        {/* Filtro de categorias */}
         {categories.length > 0 && (
-          <section className="space-y-4" aria-label="Filtro de categorias">
-            <div className="flex flex-wrap gap-2 justify-center">
-              {categories.map((category) => (
-                <Button
-                  key={category.slug}
-                  variant={selectedCategory === category.slug ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => handleCategoryFilter(category.slug)}
-                  className="rounded-full"
-                >
-                  {category.name} ({category.count})
-                </Button>
-              ))}
+          <section className="space-y-6" aria-label="Filtro de categorias">
+            <div className="flex flex-wrap gap-2 sm:gap-3 justify-center px-2">
+              {categories.map((category) => {
+                const IconComponent = categoryIcons[category.icon || 'default']
+                return (
+                  <Button
+                    key={category.slug}
+                    variant={selectedCategory === category.slug ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => handleCategoryFilter(category.slug)}
+                    className={`rounded-full transition-all duration-300 hover:scale-105 ${
+                      selectedCategory === category.slug 
+                        ? 'shadow-lg shadow-primary/25 bg-primary/90'
+                        : 'hover:shadow-md hover:bg-primary/10'
+                    }`}
+                  >
+                    <IconComponent className="h-3.5 w-3.5 mr-1.5" />
+                    <span className="text-xs sm:text-sm">{category.name} ({category.count})</span>
+                  </Button>
+                )
+              })}
             </div>
             
             {selectedCategory && (
@@ -188,41 +184,41 @@ export default function SearchPage() {
                   variant="ghost" 
                   size="sm" 
                   onClick={clearCategoryFilter}
-                  className="text-muted-foreground flex items-center gap-1"
+                  className="text-muted-foreground flex items-center gap-2 hover:text-white transition-colors text-xs sm:text-sm"
                 >
-                  <X className="h-4 w-4" /> Limpar filtro de categoria
+                  <X className="h-3.5 w-3.5" /> Limpar filtro
                 </Button>
               </div>
             )}
           </section>
         )}
 
-        <section className="space-y-8" aria-label="Resultados da busca">
+        <section className="space-y-6" aria-label="Resultados da busca">
           {loading ? (
             <div
               role="status"
               aria-live="polite"
-              className="flex items-center justify-center p-6 animate-pulse"
+              className="flex items-center justify-center p-6 sm:p-8 animate-pulse backdrop-blur-md bg-background/90 rounded-2xl shadow-lg"
             >
-              <span className="sr-only">Carregando resultados</span>
-              <div className="text-lg">Buscando...</div>
+              <Search className="h-5 w-5 mr-2 animate-spin" />
+              <span className="text-base sm:text-lg font-medium">Buscando...</span>
             </div>
           ) : error ? (
             <div
               role="alert"
-              className="text-center text-red-600 font-semibold bg-red-100 p-4 rounded-md"
+              className="text-center text-red-600 font-semibold bg-red-50 dark:bg-red-900/10 p-6 rounded-2xl shadow-lg backdrop-blur-md"
             >
               {error}
             </div>
           ) : results.length > 0 ? (
             <>
-              <p className="text-muted-foreground text-center text-lg" aria-live="polite">
+              <p className="text-muted-foreground text-center text-sm sm:text-base backdrop-blur-md bg-background/90 p-4 rounded-2xl shadow-md" aria-live="polite">
                 Encontrado {results.length} resultado{results.length !== 1 ? "s" : ""} para "{query}"
                 {selectedCategory && " na categoria selecionada"}
               </p>
-              <div className="grid gap-6 grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+              <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                 {results.map((post) => (
-                  <div key={post.slug} className="w-full flex justify-center">
+                  <div key={post.slug} className="w-full flex justify-center transform hover:scale-[1.02] transition-transform duration-300">
                     <PostCard post={post} />
                   </div>
                 ))}
@@ -230,7 +226,7 @@ export default function SearchPage() {
             </>
           ) : (
             <p
-              className="text-muted-foreground text-center text-lg italic text-gray-500 dark:text-gray-400"
+              className="text-muted-foreground text-center text-sm sm:text-base italic backdrop-blur-md bg-background/90 p-6 sm:p-8 rounded-2xl shadow-lg"
               role="status"
               aria-live="polite"
             >
