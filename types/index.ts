@@ -1,9 +1,3 @@
-export interface Author {
-  name: string;
-  image?: string;
-  bio?: string;
-}
-
 export interface Post {
   slug: string;
   title: string;
@@ -12,5 +6,17 @@ export interface Post {
   content: string;
   coverImage?: string;
   tags?: string[];
-  author?: Author;
+  category?: string;
+  author?: {
+    name: string;
+    image?: string;
+    bio?: string;
+  };
+  image?: string;
+}
+
+export interface Category {
+  name: string;
+  slug: string;
+  count: number;
 }

@@ -5,7 +5,7 @@ import { Metadata } from "next"
 import { getPostBySlug } from "@/lib/posts"
 import { formatDate } from "@/lib/utils"
 import { Mdx } from "@/components/mdx"
-import { ArrowLeft, Calendar, User, Clock } from "lucide-react"
+import { ArrowLeft, Calendar, User, Clock, ChevronRight, HomeIcon, BookOpen } from "lucide-react"
 import FloatingActionButton from "@/components/FloatingActionButton"
 
 type Params = {
@@ -50,17 +50,40 @@ export default async function PostPage({ params }: Params) {
       
       <div className="container mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 -mt-16 xs:-mt-20 sm:-mt-24 md:-mt-28">
         <div className="mx-auto max-w-4xl bg-card dark:bg-card shadow-sm dark:shadow-md rounded-xl border border-border dark:border-border/50 overflow-hidden">
-          {/* Back button */}
-          <div className="px-4 xs:px-6 pt-4 xs:pt-6">
-            <Link 
-              href="/" 
-              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
-              aria-label="Voltar para a página do blog"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span>Voltar</span>
-            </Link>
-          </div>
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="px-4 xs:px-6 pt-4 xs:pt-6">
+            <ol className="flex flex-wrap items-center gap-2 text-sm">
+              <li className="flex items-center">
+                <Link 
+                  href="/" 
+                  className="flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors duration-200"
+                >
+                  <HomeIcon className="h-3.5 w-3.5" />
+                  <span className="hidden xs:inline">Home</span>
+                </Link>
+              </li>
+              <li className="flex items-center text-muted-foreground">
+                <ChevronRight className="h-4 w-4 flex-shrink-0" />
+              </li>
+              <li className="flex items-center">
+                <Link 
+                  href="/categorias" 
+                  className="flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors duration-200"
+                >
+                  <BookOpen className="h-3.5 w-3.5" />
+                  <span className="hidden xs:inline">Blog</span>
+                </Link>
+              </li>
+              <li className="flex items-center text-muted-foreground">
+                <ChevronRight className="h-4 w-4 flex-shrink-0" />
+              </li>
+              <li className="flex items-center">
+                <span className="text-foreground line-clamp-1" title={post.title}>
+                  {post.title}
+                </span>
+              </li>
+            </ol>
+          </nav>
           
           {/* Article content */}
           <div className="px-4 xs:px-6 sm:px-8 md:px-10 py-4 xs:py-6 sm:py-8">

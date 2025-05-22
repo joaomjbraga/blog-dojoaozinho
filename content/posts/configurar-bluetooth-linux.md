@@ -2,6 +2,7 @@
 title: "Como Configurar o Bluetooth no Linux de Forma Simples"
 excerpt: "Um guia prático para configurar e solucionar problemas de Bluetooth no Arch Linux, Ubuntu e suas derivadas."
 date: "2025-05-20"
+category: "Tutoriais"
 tags: ['linux', 'arch', 'bluetooth', 'tutorial']
 coverImage: "https://img.odcdn.com.br/wp-content/uploads/2023/07/bluetooth.png"
 author:

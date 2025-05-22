@@ -1,28 +1,24 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import Header from "@/components/header"
+import { Inter } from 'next/font/google'
+import './globals.css'
+import Footer from '@/components/Footer'
+import { Metadata } from 'next'
+import { ThemeProvider } from '@/components/theme-provider'
+import Header from '@/components/header'
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Blog do Joãozinho",
-  icons: {
-    icon: "/favicon.svg",
-  },
-  description: "Blog de João M J Braga Dev",
-  generator: 'developer'
+  title: 'Blog do Joãozinho - Tecnologia, Linux e Desenvolvimento',
+  description: 'Um blog sobre tecnologia, desenvolvimento web, Linux e outros tópicos relacionados à área de TI.',
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="pt-br" suppressHydrationWarning>
+   <html lang="pt-br" suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <Header />

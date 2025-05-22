@@ -4,12 +4,14 @@ import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
 import { compileMDX } from "next-mdx-remote/rsc"
+import { Category } from "@/types"
 
 const postsDirectory = path.join(process.cwd(), "content/posts")
 
 export interface Author {
   name: string
   image?: string
+  bio?: string
 }
 
 export interface Post {
@@ -20,6 +22,7 @@ export interface Post {
   content: string // Conteúdo MDX puro (não compilado)
   coverImage?: string
   tags?: string[]
+  category?: string // Adicionando a propriedade category
   author?: Author
   image?: string
 }
@@ -84,6 +87,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       content,
       coverImage: typeof data.coverImage === "string" ? data.coverImage : undefined,
       tags: Array.isArray(data.tags) ? data.tags : undefined,
+      category: typeof data.category === "string" ? data.category : "Geral", // Categoria padrão
       author: typeof data.author === "object" ? data.author : undefined,
       image: typeof data.image === "string" ? data.image : undefined,
     }
@@ -91,6 +95,43 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     console.error(`Erro ao processar post ${slug}:`, error)
     return null
   }
+}
+
+export async function getPostsByCategory(category: string): Promise<Post[]> {
+  const allPosts = await getAllPosts()
+  
+  // Normalizar a categoria para comparação
+  const normalizedCategory = category.toLowerCase().replace(/-/g, ' ')
+  
+  // Filtrar posts pela categoria
+  return allPosts.filter(post => {
+    const postCategory = (post.category || "Geral").toLowerCase()
+    return postCategory === normalizedCategory
+  })
+}
+
+export async function getCategories(): Promise<Category[]> {
+  const posts = await getAllPosts()
+  
+  // Extrair todas as categorias únicas e contar posts
+  const categoriesMap: Record<string, number> = {}
+  
+  posts.forEach(post => {
+    const category = post.category || "Geral"
+    if (!categoriesMap[category]) {
+      categoriesMap[category] = 0
+    }
+    categoriesMap[category]++
+  })
+  
+  // Converter para array e ordenar por nome
+  return Object.entries(categoriesMap)
+    .map(([name, count]) => ({
+      name,
+      count,
+      slug: name.toLowerCase().replace(/\s+/g, '-')
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name))
 }
 
 function createSamplePosts() {
