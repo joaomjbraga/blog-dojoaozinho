@@ -62,8 +62,6 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     const fileContents = fs.readFileSync(fullPath, "utf8")
     const { data, content } = matter(fileContents)
 
-    // Apenas para garantir que o conteúdo MDX está correto, não precisamos do conteúdo compilado para retornar aqui
-    // Mas compileMDX pode ser usado para validação e parsing do frontmatter
     await compileMDX({
       source: content,
       options: { parseFrontmatter: true },
@@ -100,20 +98,26 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 export async function getPostsByCategory(category: string): Promise<Post[]> {
   const allPosts = await getAllPosts()
   
-  // Normalizar a categoria para comparação
   const normalizedCategory = category.toLowerCase().replace(/-/g, ' ')
   
-  // Filtrar posts pela categoria
   return allPosts.filter(post => {
     const postCategory = (post.category || "Geral").toLowerCase()
     return postCategory === normalizedCategory
   })
 }
 
+// Função nova corrigida para slug decodificado
+export async function getPostsByCategorySlug(slug: string): Promise<Post[]> {
+  const decodedSlug = decodeURIComponent(slug).toLowerCase()
+  const categories = await getCategories()
+  const category = categories.find(cat => cat.slug === decodedSlug)
+  if (!category) return []
+  return getPostsByCategory(category.name)
+}
+
 export async function getCategories(): Promise<Category[]> {
   const posts = await getAllPosts()
   
-  // Extrair todas as categorias únicas e contar posts
   const categoriesMap: Record<string, number> = {}
   
   posts.forEach(post => {
@@ -124,7 +128,6 @@ export async function getCategories(): Promise<Category[]> {
     categoriesMap[category]++
   })
   
-  // Converter para array e ordenar por nome
   return Object.entries(categoriesMap)
     .map(([name, count]) => ({
       name,
