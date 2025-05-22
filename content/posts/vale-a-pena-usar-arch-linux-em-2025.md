@@ -1,7 +1,7 @@
 ---
 title: "Vale a pena usar Arch Linux em 2025?"
 excerpt: "Uma análise sincera sobre as vantagens e desafios de usar Arch Linux atualmente."
-date: "2025-05-20"
+date: "2025-05-20T22:30:00Z"
 category: "Linux"
 tags: ['linux', 'arch']
 coverImage: "https://i0.wp.com/dmaisinfo.com.br/wp-content/uploads/2023/06/arch-linux-logotipo-introducao.jpg.jpg?fit=1200%2C675&ssl=1"

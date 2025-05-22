@@ -1,7 +1,7 @@
 ---
 title: "Transforme seu GIMP em um Mini-Photoshop com o PhotoGIMP"
 description: "Aprenda como personalizar o GIMP para se assemelhar ao Adobe Photoshop usando o PhotoGIMP, facilitando a transição para o software livre."
-date: "2025-05-22"
+date: "2025-05-22T09:30:00Z"
 tags: ["GIMP", "PhotoGIMP", "Photoshop", "Design Gráfico", "Software Livre"]
 coverImage: "https://raw.githubusercontent.com/Diolinux/PhotoGIMP/master/.config/GIMP/3.0/splashes/splash-screen-2025-v2.png"
 author:
@@ -74,8 +74,17 @@ Copie o conteúdo das pastas `PhotoGIMP/.config/GIMP/3.0/` e `PhotoGIMP/.local/s
 Após copiar os arquivos, inicie o GIMP. Você deverá ver a nova tela de abertura e a interface modificada.
 
 ### Tutoriais em video
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/ZEZihylv04g?si=HN8-lfxpRpE1KjTL"
+  title="YouTube video player"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerPolicy="strict-origin-when-cross-origin"
+  allowFullScreen
+></iframe>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ZEZihylv04g" title="Como instalar o PhotoGIMP no Linux" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Considerações finais
 

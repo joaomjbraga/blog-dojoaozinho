@@ -1,7 +1,7 @@
 ---
 slug: "sistemas-operacionais-so"
-title: "Sistemas Operacionais - Parte 1: Conceitos Básicos"
-date: "2025-05-20"
+title: "Sistemas Operacionais"
+date: "2025-05-20T22:29:00Z"
 category: "Sistemas Operacionais"
 excerpt: "Entenda os conceitos fundamentais de um sistema operacional."
 coverImage: "https://www.i-aida.org/wp-content/uploads/2021/03/photo-main@3x-3.jpg"
