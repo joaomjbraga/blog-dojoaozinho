@@ -60,38 +60,38 @@ export default function HomePage() {
 
       {/* Banner de progresso de leitura */}
       {readCount > 0 && (
-        <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 rounded-lg p-6 mb-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg">
-                <BookOpen className="w-6 h-6 text-primary" />
+        <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg shrink-0">
+                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-1">Seu Progresso de Leitura</h3>
-                <p className="text-muted-foreground text-sm">
+                <h3 className="text-base sm:text-lg font-semibold mb-0.5 sm:mb-1">Seu Progresso de Leitura</h3>
+                <p className="text-muted-foreground text-xs sm:text-sm">
                   {readCount} de {posts.length} posts lidos
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-3 sm:gap-4">
               <div className="text-right">
-                <div className="text-2xl font-bold text-primary">{Math.round((readCount / posts.length) * 100) || 0}%</div>
-                <div className="text-xs text-muted-foreground">Completo</div>
+                <div className="text-xl sm:text-2xl font-bold text-primary">{Math.round((readCount / posts.length) * 100) || 0}%</div>
+                <div className="text-[10px] sm:text-xs text-muted-foreground">Completo</div>
               </div>
               <Link 
                 href="/leitura"
-                className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2"
+                className="bg-primary text-primary-foreground px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
               >
-                <TrendingUp className="w-4 h-4" />
+                <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4" />
                 Ver Detalhes
               </Link>
             </div>
           </div>
           
           {/* Barra de progresso */}
-          <div className="w-full bg-muted rounded-full h-2 mt-4">
+          <div className="w-full bg-muted rounded-full h-1.5 sm:h-2 mt-3 sm:mt-4">
             <div
-              className="bg-gradient-to-r from-primary to-primary/80 h-2 rounded-full transition-all duration-500"
+              className="bg-gradient-to-r from-primary to-primary/80 h-1.5 sm:h-2 rounded-full transition-all duration-500"
               style={{ width: `${Math.round((readCount / posts.length) * 100) || 0}%` }}
             />
           </div>
