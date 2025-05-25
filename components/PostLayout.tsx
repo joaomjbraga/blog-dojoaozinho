@@ -2,12 +2,14 @@
 
 import { ReactNode } from 'react'
 import Image from 'next/image'
-import { Calendar, ArrowLeft, Tag, User, BarChart3 } from 'lucide-react'
+import { Calendar, ArrowLeft, Tag, User, BarChart3, Trophy, BookOpen, Star } from 'lucide-react'
 import Link from 'next/link'
 import { Post } from '@/types'
 import { PostReadButton } from './PostReadButton'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
+import { motion } from 'framer-motion'
+import { useReadPosts } from '@/hooks/useReadPosts'
 import FloatingActionButton from './post/FloatingActionButton'
 
 interface PostLayoutProps {
@@ -18,7 +20,7 @@ interface PostLayoutProps {
 // Componente customizado para iframes responsivos
 const ResponsiveIframe = ({ 
   src, 
-  title, 
+  title,
   width = "560", 
   height = "315", 
   className = "",
@@ -226,6 +228,9 @@ const mdxComponents = {
 }
 
 export const PostLayout: React.FC<PostLayoutProps> = ({ post, children }) => {
+  // Hook para gerenciar posts lidos
+  const { isRead } = useReadPosts()
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('pt-BR', {
       year: 'numeric',
@@ -337,10 +342,73 @@ export const PostLayout: React.FC<PostLayoutProps> = ({ post, children }) => {
         {/* Seção de progresso de leitura */}
         <section id="reading-progress" className="mt-8 sm:mt-12 pt-4 sm:pt-6 md:pt-8 border-t border-border">
           <div className="text-center">
-            <h3 className="text-lg font-semibold mb-2">Progresso de Leitura</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Acompanhe seu progresso de leitura nos posts do blog
-            </p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h3 className="text-lg font-semibold mb-2 flex items-center justify-center gap-2">
+                <BarChart3 className="w-5 h-5" />
+                Progresso de Leitura
+              </h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Acompanhe seu progresso de leitura nos posts do blog
+              </p>
+              
+              {/* Status de leitura atual */}
+              {post.slug && (
+                <motion.div
+                  className="mb-4 p-3 rounded-lg bg-muted/30 border border-border/50"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    {isRead(post.slug) ? (
+                      <>
+                        <Trophy className="w-4 h-4 text-yellow-600 dark:text-yellow-400" />
+                        <span className="text-sm font-medium text-green-700 dark:text-green-400">
+                          ✅ Post marcado como lido
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <BookOpen className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                        <span className="text-sm font-medium text-blue-700 dark:text-blue-400">
+                          📖 Continue lendo para marcar como concluído
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+              
+              {/* Seção de celebração para leitura completa */}
+              <motion.div
+                className="mb-6 p-4 rounded-lg bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border border-yellow-200 dark:border-yellow-800"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Trophy className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
+                  <span className="font-medium text-yellow-800 dark:text-yellow-200">
+                    Complete a leitura e ganhe uma surpresa!
+                  </span>
+                  <Star className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
+                </div>
+                <p className="text-xs text-yellow-700 dark:text-yellow-300">
+                  Role até o final do post para ver uma animação especial de celebração e marcar automaticamente como lido
+                </p>
+              </motion.div>
+              
+              <Link href="/#reading-stats">
+                <Button variant="outline" size="sm" className="gap-2">
+                  <BarChart3 className="w-4 h-4" />
+                  Ver Estatísticas Completas
+                </Button>
+              </Link>
+            </motion.div>
           </div>
         </section>
 
@@ -396,9 +464,26 @@ export const PostLayout: React.FC<PostLayoutProps> = ({ post, children }) => {
               </div>
             </div>
           )}
+
+          {/* Seção final de celebração */}
+          <motion.div
+            className="mt-6 pt-4 border-t border-border/50 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <p className="text-xs text-muted-foreground">
+              🎉 Parabéns por chegar até aqui! Você completou a leitura deste post.
+            </p>
+          </motion.div>
         </footer>
       </div>
-    <FloatingActionButton  />
+
+      {/* Floating Action Button */}
+      <FloatingActionButton 
+        postSlug={post.slug}
+        showReadingProgress={true}
+      />
     </div>
   )
 }

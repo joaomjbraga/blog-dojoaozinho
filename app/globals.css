@@ -224,3 +224,114 @@
     background-color: rgba(0, 0, 0, 0.8);
   }
 }
+
+/* Animações de celebração */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes trophy-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes celebration-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+  }
+}
+
+.celebration-button {
+  animation: celebration-pulse 2s infinite;
+}
+
+.trophy-icon {
+  animation: trophy-bounce 1s ease-in-out infinite;
+}
+
+/* Gradiente animado para o progresso completo */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.progress-complete {
+  background: linear-gradient(-45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+  background-size: 400% 400%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Melhorias para a notificação de celebração */
+.celebration-notification {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Efeito de brilho para elementos de celebração */
+.celebration-glow {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+/* Responsividade para as animações */
+@media (max-width: 640px) {
+  .celebration-notification {
+    max-width: 280px;
+    padding: 12px 16px;
+  }
+}
+
+/* Versão alternativa mais simples e correta: */
+
+/* Reduzir animações para usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .celebration-button,
+  .trophy-icon,
+  .progress-complete,
+  *[class*="confetti"],
+  *[class*="celebration"],
+  *[class*="trophy"],
+  *[class*="gradient"] {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  /* Desabilitar todas as animações de celebração */
+  .celebration-notification {
+    animation: none !important;
+  }
+  
+  /* Manter apenas transições básicas */
+  button, a, .floating-action-button {
+    transition: opacity 0.2s ease, transform 0.1s ease !important;
+  }
+}
