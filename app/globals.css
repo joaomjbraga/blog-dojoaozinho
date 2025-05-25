@@ -84,3 +84,74 @@
     @apply bg-transparent px-0 py-0 text-foreground/90 dark:text-foreground/80;
   }
 }
+
+/* Responsividade extra para telas muito pequenas */
+@media (max-width: 375px) {
+  .prose {
+    font-size: 14px;
+  }
+  
+  .prose h1 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+  
+  .prose h2 {
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+  
+  .prose h3 {
+    font-size: 1.125rem;
+    line-height: 1.3;
+  }
+}
+
+/* Melhorias para tabelas responsivas */
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.prose table td,
+.prose table th {
+  min-width: 100px;
+  word-wrap: break-word;
+}
+
+/* Melhorias para código */
+.prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.prose code {
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+/* Melhorias para iframes */
+.prose iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Melhorias para imagens */
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Breakpoint customizado para xs */
+@media (min-width: 475px) {
+  .xs\:inline {
+    display: inline;
+  }
+  
+  .xs\:hidden {
+    display: none;
+  }
+}

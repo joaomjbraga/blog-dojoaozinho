@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation"
 import { ThemeToggle } from "./theme-toggle"
 import SearchBar from "./search-bar"
 import { Suspense, useState, useEffect } from "react"
-import { Menu, X } from "lucide-react"
+import { BookOpen, Menu, X } from "lucide-react"
 
 export default function Header() {
   const pathname = usePathname()
@@ -93,12 +93,26 @@ export default function Header() {
               >
                 Sobre
               </Link>
+              <Link 
+                href="/leitura" 
+                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors"
+              >
+                <BookOpen className="w-4 h-4" />
+                Progresso de Leitura
+              </Link>
               <ThemeToggle />
             </nav>
           </div>
 
           {/* Controles Mobile */}
           <div className="flex items-center gap-3 md:hidden">
+            <Link 
+              href="/leitura" 
+              className="flex items-center gap-1 px-2 py-1.5 rounded-lg hover:bg-muted transition-colors"
+              aria-label="Progresso de Leitura"
+            >
+              <BookOpen className="w-4 h-4" />
+            </Link>
             <ThemeToggle />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -175,6 +189,20 @@ export default function Header() {
                   aria-current={isActive('/sobre') ? "page" : undefined}
                 >
                   Sobre
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/leitura"
+                  className={`flex items-center gap-2 w-full p-3 rounded-lg transition-all duration-200 hover:bg-secondary/50 hover:scale-[1.02] ${
+                    isActive('/leitura') 
+                      ? 'bg-primary/10 text-primary font-semibold border-l-4 border-primary' 
+                      : 'text-foreground'
+                  }`}
+                  aria-current={isActive('/leitura') ? "page" : undefined}
+                >
+                  <BookOpen className="w-4 h-4" />
+                  Progresso de Leitura
                 </Link>
               </li>
             </ul>
