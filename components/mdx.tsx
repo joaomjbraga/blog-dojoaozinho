@@ -1,7 +1,7 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
-import MacOSWindow from './MacOSWindow'
+import MacOSWindow from './post/MacOSWindow'
 
 interface MdxProps {
   code: string

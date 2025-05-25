@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, useCallback } from "react"
-import { PostCard } from "@/components/post-card"
+import { PostCard } from "@/components/post/PostCard"
 import { Post } from "@/types"
 import { motion } from "framer-motion"
 

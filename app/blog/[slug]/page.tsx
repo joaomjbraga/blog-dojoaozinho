@@ -6,7 +6,7 @@ import { getPostBySlug } from "@/lib/posts"
 import { formatDate } from "@/lib/utils"
 import { Mdx } from "@/components/mdx"
 import { ArrowLeft, Calendar, User, Clock, ChevronRight, HomeIcon, BookOpen } from "lucide-react"
-import FloatingActionButton from "@/components/FloatingActionButton"
+import FloatingActionButton from "@/components/post/FloatingActionButton"
 
 type Params = {
   params: {

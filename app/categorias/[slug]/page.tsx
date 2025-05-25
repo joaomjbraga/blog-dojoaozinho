@@ -2,7 +2,7 @@ import { getCategories, getPostsByCategorySlug } from '@/lib/mdx';
 import { Folder, AlertCircle } from 'lucide-react';
 import Breadcrumb from '@/components/Breadcrumb';
 import { Metadata } from 'next';
-import { PostCard } from '@/components/post-card';
+import { PostCard } from '@/components/post/PostCard';
 
 interface CategoryPageProps {
   params: {

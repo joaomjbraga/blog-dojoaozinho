@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation"
 import { useEffect, useState, useRef } from "react"
 import SearchBar from "@/components/search-bar"
 import type { Post } from "@/lib/mdx"
-import { PostCard } from "@/components/post-card"
+import { PostCard } from "@/components/post/PostCard"
 import { Button } from "@/components/ui/button"
 import { X, Search, Tag, BookOpen, Code, Music, Camera, Film, Palette, Coffee, Gamepad } from "lucide-react"
 
