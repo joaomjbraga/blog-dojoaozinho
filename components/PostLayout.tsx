@@ -2,12 +2,13 @@
 
 import { ReactNode } from 'react'
 import Image from 'next/image'
-import { Calendar, ArrowLeft, Tag, User } from 'lucide-react'
+import { Calendar, ArrowLeft, Tag, User, BarChart3 } from 'lucide-react'
 import Link from 'next/link'
 import { Post } from '@/types'
 import { PostReadButton } from './PostReadButton'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
+import FloatingActionButton from './post/FloatingActionButton'
 
 interface PostLayoutProps {
   post: Post
@@ -248,7 +249,7 @@ export const PostLayout: React.FC<PostLayoutProps> = ({ post, children }) => {
             >
               <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden xs:inline">Voltar</span>
-              <span className="inline xs:hidden">Voltar</span>
+              <span className="xs:hidden">←</span>
             </Button>
           </Link>
         </nav>
@@ -333,6 +334,16 @@ export const PostLayout: React.FC<PostLayoutProps> = ({ post, children }) => {
           </div>
         </main>
 
+        {/* Seção de progresso de leitura */}
+        <section id="reading-progress" className="mt-8 sm:mt-12 pt-4 sm:pt-6 md:pt-8 border-t border-border">
+          <div className="text-center">
+            <h3 className="text-lg font-semibold mb-2">Progresso de Leitura</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Acompanhe seu progresso de leitura nos posts do blog
+            </p>
+          </div>
+        </section>
+
         {/* Footer */}
         <footer className="mt-8 sm:mt-12 pt-4 sm:pt-6 md:pt-8 border-t border-border">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
@@ -387,6 +398,7 @@ export const PostLayout: React.FC<PostLayoutProps> = ({ post, children }) => {
           )}
         </footer>
       </div>
+    <FloatingActionButton  />
     </div>
   )
 }

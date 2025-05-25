@@ -34,6 +34,8 @@ export async function generateMetadata({ params }: PostPageProps) {
       description: post.excerpt,
       images: post.coverImage ? [post.coverImage] : [],
       type: 'article',
+      publishedTime: post.date,
+      authors: post.author?.name ? [post.author.name] : [],
     },
     twitter: {
       card: 'summary_large_image',
@@ -41,6 +43,8 @@ export async function generateMetadata({ params }: PostPageProps) {
       description: post.excerpt,
       images: post.coverImage ? [post.coverImage] : [],
     },
+    keywords: post.tags?.join(', '),
+    authors: post.author?.name ? [{ name: post.author.name }] : [],
   }
 }
 
