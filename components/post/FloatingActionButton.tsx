@@ -11,32 +11,139 @@ interface FloatingActionButtonProps {
   showReadingProgress?: boolean
 }
 
-// Componente de animação de celebração
+// Componente de animação de celebração centralizado na tela
 const CelebrationAnimation = () => (
-  <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-full">
-    {Array.from({ length: 12 }).map((_, i) => (
-      <motion.div
-        key={i}
-        className="absolute w-2 h-2 rounded-full"
-        style={{
-          background: `hsl(${Math.random() * 360}, 70%, 60%)`,
-          left: '50%',
-          top: '50%',
-        }}
-        initial={{ scale: 0, x: 0, y: 0 }}
-        animate={{
-          scale: [0, 1, 0],
-          x: [0, (Math.random() - 0.5) * 100],
-          y: [0, (Math.random() - 0.5) * 100],
-        }}
-        transition={{
-          duration: 1.5,
-          delay: i * 0.1,
-          ease: "easeOut"
-        }}
-      />
-    ))}
-  </div>
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    className="fixed inset-0 pointer-events-none z-[9999] flex items-center justify-center"
+  >
+    {/* Confetes grandes para telas grandes */}
+    <div className="hidden lg:block absolute inset-0">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <motion.div
+          key={`large-${i}`}
+          className="absolute w-4 h-4 rounded-full"
+          style={{
+            background: `hsl(${Math.random() * 360}, 70%, 60%)`,
+            left: '50%',
+            top: '50%',
+          }}
+          initial={{ scale: 0, x: 0, y: 0, rotate: 0 }}
+          animate={{
+            scale: [0, 1, 0.5, 0],
+            x: [0, (Math.random() - 0.5) * 800],
+            y: [0, (Math.random() - 0.5) * 600],
+            rotate: [0, Math.random() * 720],
+          }}
+          transition={{
+            duration: 3,
+            delay: i * 0.1,
+            ease: "easeOut"
+          }}
+        />
+      ))}
+    </div>
+
+    {/* Confetes médios para tablets */}
+    <div className="hidden md:block lg:hidden absolute inset-0">
+      {Array.from({ length: 15 }).map((_, i) => (
+        <motion.div
+          key={`medium-${i}`}
+          className="absolute w-3 h-3 rounded-full"
+          style={{
+            background: `hsl(${Math.random() * 360}, 70%, 60%)`,
+            left: '50%',
+            top: '50%',
+          }}
+          initial={{ scale: 0, x: 0, y: 0, rotate: 0 }}
+          animate={{
+            scale: [0, 1, 0.5, 0],
+            x: [0, (Math.random() - 0.5) * 600],
+            y: [0, (Math.random() - 0.5) * 400],
+            rotate: [0, Math.random() * 720],
+          }}
+          transition={{
+            duration: 2.5,
+            delay: i * 0.1,
+            ease: "easeOut"
+          }}
+        />
+      ))}
+    </div>
+
+    {/* Confetes pequenos para mobile */}
+    <div className="block md:hidden absolute inset-0">
+      {Array.from({ length: 12 }).map((_, i) => (
+        <motion.div
+          key={`small-${i}`}
+          className="absolute w-2 h-2 rounded-full"
+          style={{
+            background: `hsl(${Math.random() * 360}, 70%, 60%)`,
+            left: '50%',
+            top: '50%',
+          }}
+          initial={{ scale: 0, x: 0, y: 0, rotate: 0 }}
+          animate={{
+            scale: [0, 1, 0.5, 0],
+            x: [0, (Math.random() - 0.5) * 300],
+            y: [0, (Math.random() - 0.5) * 400],
+            rotate: [0, Math.random() * 720],
+          }}
+          transition={{
+            duration: 2,
+            delay: i * 0.1,
+            ease: "easeOut"
+          }}
+        />
+      ))}
+    </div>
+
+    {/* Estrelas centrais */}
+    <div className="absolute inset-0 flex items-center justify-center">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <motion.div
+          key={`star-${i}`}
+          className="absolute"
+          initial={{ scale: 0, rotate: 0 }}
+          animate={{
+            scale: [0, 1.5, 1, 0],
+            rotate: [0, 180, 360],
+            x: [0, (Math.random() - 0.5) * 200],
+            y: [0, (Math.random() - 0.5) * 200],
+          }}
+          transition={{
+            duration: 2,
+            delay: i * 0.2,
+            ease: "easeOut"
+          }}
+        >
+          <Star 
+            className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-yellow-400" 
+            fill="currentColor"
+          />
+        </motion.div>
+      ))}
+    </div>
+
+    {/* Troféu central */}
+    <motion.div
+      className="relative z-10"
+      initial={{ scale: 0, y: 50 }}
+      animate={{ 
+        scale: [0, 1.2, 1],
+        y: [50, -10, 0],
+        rotate: [0, 10, -10, 0]
+      }}
+      transition={{
+        duration: 1,
+        ease: "easeOut"
+      }}
+    >
+      <Trophy className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 text-yellow-500" />
+    </motion.div>
+  </motion.div>
 )
 
 export default function FloatingActionButton({
@@ -91,10 +198,10 @@ export default function FloatingActionButton({
         setHasMarkedAsRead(true)
         setShowCelebration(true)
         
-        // Parar a celebração após 3 segundos
+        // Parar a celebração após 4 segundos
         setTimeout(() => {
           setShowCelebration(false)
-        }, 3000)
+        }, 4000)
       }, 500)
 
       return () => clearTimeout(timer)
@@ -143,19 +250,19 @@ export default function FloatingActionButton({
     ...(showScrollButton
       ? [
           {
-            icon: <ArrowUp className="w-4 h-4 sm:w-5 sm:h-5" />,
+            icon: <ArrowUp className="w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5" />,
             label: 'Ir para o topo',
             onClick: scrollToTop,
           },
         ]
       : []),
     {
-      icon: <Copy className="w-4 h-4 sm:w-5 sm:h-5" />,
+      icon: <Copy className="w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5" />,
       label: 'Copiar link',
       onClick: copyLink,
     },
     {
-      icon: <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />,
+      icon: <BookOpen className="w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5" />,
       label: 'Progresso de leitura',
       onClick: () => {
         const progressSection = document.getElementById('reading-progress')
@@ -170,6 +277,11 @@ export default function FloatingActionButton({
 
   return (
     <>
+      {/* Animação de celebração centralizada */}
+      <AnimatePresence>
+        {showCelebration && <CelebrationAnimation />}
+      </AnimatePresence>
+
       {/* Notificação de link copiado */}
       <AnimatePresence>
         {copied && (
@@ -182,17 +294,19 @@ export default function FloatingActionButton({
             role="alert"
             aria-live="assertive"
             className="
-              fixed top-4 sm:top-6 right-4 sm:right-6 z-50
-              rounded-lg bg-gradient-to-r from-green-500 to-green-600
-              px-3 sm:px-4 py-2 sm:py-2.5
+              fixed top-2 xs:top-3 sm:top-4 md:top-6 
+              right-2 xs:right-3 sm:right-4 md:right-6 z-50
+              rounded-md xs:rounded-lg bg-gradient-to-r from-green-500 to-green-600
+              px-2 xs:px-3 sm:px-4 py-1.5 xs:py-2 sm:py-2.5
               text-white shadow-lg ring-1 ring-green-400/30
               backdrop-blur-md
-              select-none font-medium text-sm sm:text-base
+              select-none font-medium text-xs xs:text-sm sm:text-base
+              max-w-[calc(100vw-1rem)] xs:max-w-xs sm:max-w-sm
             "
           >
-            <div className="flex items-center gap-2">
-              <Copy className="w-4 h-4 sm:w-5 sm:h-5" />
-              Link copiado com sucesso!
+            <div className="flex items-center gap-1 xs:gap-2">
+              <Copy className="w-3 h-3 xs:w-4 xs:h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+              <span className="truncate">Link copiado!</span>
             </div>
           </motion.div>
         )}
@@ -210,16 +324,18 @@ export default function FloatingActionButton({
             role="alert"
             aria-live="assertive"
             className="
-              fixed top-4 sm:top-6 left-1/2 transform -translate-x-1/2 z-50
-              rounded-lg bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400
-              px-4 sm:px-6 py-3 sm:py-4
+              fixed top-2 xs:top-3 sm:top-4 md:top-6 
+              left-1/2 transform -translate-x-1/2 z-[60]
+              rounded-md xs:rounded-lg bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400
+              px-3 xs:px-4 sm:px-6 py-2 xs:py-3 sm:py-4
               text-white shadow-2xl
               backdrop-blur-md
-              select-none font-medium text-sm sm:text-base
-              max-w-sm w-full mx-4
+              select-none font-medium text-xs xs:text-sm sm:text-base
+              max-w-[calc(100vw-1rem)] xs:max-w-xs sm:max-w-sm
+              mx-2 xs:mx-4
             "
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 xs:gap-3">
               <motion.div
                 animate={{ 
                   rotate: [0, 15, -15, 0],
@@ -231,12 +347,12 @@ export default function FloatingActionButton({
                   ease: "easeInOut"
                 }}
               >
-                <Trophy className="w-6 h-6" />
+                <Trophy className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 flex-shrink-0" />
               </motion.div>
               
-              <div className="flex-1">
-                <div className="font-bold">🎉 Parabéns!</div>
-                <div className="text-sm opacity-90">Post marcado como lido!</div>
+              <div className="flex-1 min-w-0">
+                <div className="font-bold text-xs xs:text-sm">🎉 Parabéns!</div>
+                <div className="text-xs opacity-90 truncate">Post marcado como lido!</div>
               </div>
 
               <motion.div
@@ -287,7 +403,7 @@ export default function FloatingActionButton({
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="fixed top-0 left-0 right-0 z-40 h-1.5 bg-muted"
+          className="fixed top-0 left-0 right-0 z-40 h-1 xs:h-1.5 sm:h-2 bg-muted"
         >
           <motion.div
             className={`h-full transition-all duration-300 ${
@@ -302,7 +418,7 @@ export default function FloatingActionButton({
       )}
 
       {/* Floating Action Button */}
-      <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end space-y-2 sm:space-y-3">
+      <div className="fixed bottom-2 xs:bottom-3 sm:bottom-4 md:bottom-6 right-2 xs:right-3 sm:right-4 md:right-6 z-50 flex flex-col items-end space-y-1 xs:space-y-2 sm:space-y-3">
         <AnimatePresence>
           {isOpen &&
             actions.map((action, i) => (
@@ -317,8 +433,8 @@ export default function FloatingActionButton({
                   <Link
                     href={action.href}
                     className="
-                      flex items-center gap-2
-                      px-3 sm:px-4 py-1.5 sm:py-2
+                      flex items-center gap-1 xs:gap-2
+                      px-2 xs:px-3 sm:px-4 py-1 xs:py-1.5 sm:py-2
                       rounded-full
                       bg-background/90 text-foreground
                       shadow-md hover:shadow-lg
@@ -328,24 +444,25 @@ export default function FloatingActionButton({
                       transition-all duration-200
                       select-none
                       whitespace-nowrap
-                      text-sm sm:text-base
+                      text-xs xs:text-sm sm:text-base
                       font-medium
                       focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
                       backdrop-blur-md
+                      max-w-[calc(100vw-4rem)] xs:max-w-none
                     "
                     title={action.label}
                     aria-label={action.label}
                     onClick={() => setIsOpen(false)}
                   >
                     {action.icon}
-                    <span className="hidden sm:inline">{action.label}</span>
+                    <span className="hidden xs:inline truncate">{action.label}</span>
                   </Link>
                 ) : (
                   <button
                     onClick={action.onClick}
                     className="
-                      flex items-center gap-2
-                      px-3 sm:px-4 py-1.5 sm:py-2
+                      flex items-center gap-1 xs:gap-2
+                      px-2 xs:px-3 sm:px-4 py-1 xs:py-1.5 sm:py-2
                       rounded-full
                       bg-background/90 text-foreground
                       shadow-md hover:shadow-lg
@@ -355,16 +472,17 @@ export default function FloatingActionButton({
                       transition-all duration-200
                       select-none
                       whitespace-nowrap
-                      text-sm sm:text-base
+                      text-xs xs:text-sm sm:text-base
                       font-medium
                       focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
                       backdrop-blur-md
+                      max-w-[calc(100vw-4rem)] xs:max-w-none
                     "
                     title={action.label}
                     aria-label={action.label}
                   >
                     {action.icon}
-                    <span className="hidden sm:inline">{action.label}</span>
+                    <span className="hidden xs:inline truncate">{action.label}</span>
                   </button>
                 )}
               </motion.div>
@@ -378,7 +496,7 @@ export default function FloatingActionButton({
           aria-label={isOpen ? "Fechar menu de ações" : "Abrir menu de ações"}
           className={`
             relative
-            p-3 sm:p-3.5
+            p-2 xs:p-2.5 sm:p-3 md:p-3.5
             rounded-full
             shadow-lg hover:shadow-xl
             active:scale-95
@@ -395,9 +513,6 @@ export default function FloatingActionButton({
           whileHover={{ scale: 1.1, rotate: 5 }}
           whileTap={{ scale: 0.95 }}
         >
-          {/* Animação de celebração no botão */}
-          {showCelebration && <CelebrationAnimation />}
-
           {/* Círculo de progresso */}
           {showReadingProgress && readingProgress > 0 && (
             <svg
@@ -435,12 +550,12 @@ export default function FloatingActionButton({
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
               >
-                <Trophy className="w-5 h-5 sm:w-6 sm:h-6" />
+                <Trophy className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
               </motion.div>
             ) : isOpen ? (
-              <X className="w-5 h-5 sm:w-6 sm:h-6" />
+              <X className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
             ) : (
-              <Plus className="w-5 h-5 sm:w-6 sm:h-6" />
+              <Plus className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
             )}
           </div>
         </motion.button>
@@ -453,7 +568,7 @@ export default function FloatingActionButton({
             transition={{ duration: 0.2 }}
             className={`
               sm:hidden
-              px-2 py-1 rounded-full
+              px-1.5 xs:px-2 py-0.5 xs:py-1 rounded-full
               text-xs font-medium
               shadow-sm
               backdrop-blur-md
@@ -464,12 +579,12 @@ export default function FloatingActionButton({
             `}
           >
             {readingProgress >= 100 || postIsRead ? (
-              <div className="flex items-center gap-1">
-                <Trophy className="w-3 h-3" />
-                <span>100%</span>
+              <div className="flex items-center gap-0.5 xs:gap-1">
+                <Trophy className="w-2.5 h-2.5 xs:w-3 xs:h-3" />
+                <span className="text-xs">100%</span>
               </div>
             ) : (
-              `${Math.round(readingProgress)}%`
+              <span className="text-xs">{Math.round(readingProgress)}%</span>
             )}
           </motion.div>
         )}
@@ -483,21 +598,22 @@ export default function FloatingActionButton({
             className="
               hidden sm:block
               bg-background/90 text-foreground
-              px-3 py-2 rounded-lg
-              text-xs font-medium
+              px-2 sm:px-3 py-1 sm:py-2 rounded-md sm:rounded-lg
+              text-xs sm:text-sm font-medium
               shadow-md border border-border/50
               backdrop-blur-md
               whitespace-nowrap
-              mr-2
+              mr-1 sm:mr-2
+              max-w-[200px] lg:max-w-none
             "
           >
             {readingProgress >= 100 ? (
               <div className="flex items-center gap-1 text-yellow-600 dark:text-yellow-400">
                 <Trophy className="w-3 h-3" />
-                Post concluído!
+                <span className="truncate">Post concluído!</span>
               </div>
             ) : (
-              `Quase lá! ${Math.round(readingProgress)}%`
+              <span className="truncate">Quase lá! {Math.round(readingProgress)}%</span>
             )}
           </motion.div>
         )}

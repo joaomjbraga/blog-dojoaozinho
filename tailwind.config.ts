@@ -20,6 +20,9 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        'xs': '475px', // Adicionando breakpoint para telas muito pequenas
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -74,16 +77,9 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
-      typography: {
-        DEFAULT: {
-          css: {
-            maxWidth: "100%",
-          },
-        },
-      },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config
 
 export default config
