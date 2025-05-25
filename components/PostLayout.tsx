@@ -254,7 +254,7 @@ export const PostLayout: React.FC<PostLayoutProps> = ({ post, children }) => {
             >
               <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden xs:inline">Voltar</span>
-              <span className="xs:hidden">←</span>
+              <span className="xs:hidden">Voltar</span>
             </Button>
           </Link>
         </nav>
