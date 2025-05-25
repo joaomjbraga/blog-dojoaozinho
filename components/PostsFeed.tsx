@@ -113,7 +113,7 @@ export const PostsFeed: React.FC<PostsFeedProps> = ({
       )}
 
       {/* Estatísticas de leitura */}
-      {(unreadPosts.length > 0 || readPosts.length > 0) && (
+      {readPosts.length > 0 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -152,7 +152,6 @@ export const PostsFeed: React.FC<PostsFeedProps> = ({
             </div>
           </div>
         </motion.div>
-      )}
-    </div>
+      )}    </div>
   )
 }
