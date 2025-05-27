@@ -1,230 +1,20 @@
 'use client'
 
-import { ReactNode } from 'react'
-import Image from 'next/image'
-import { Calendar, ArrowLeft, Tag, User, BarChart3, Trophy, BookOpen, Star } from 'lucide-react'
-import Link from 'next/link'
-import { Post } from '@/types'
-import { PostReadButton } from './PostReadButton'
-import { Button } from './ui/button'
-import { Badge } from './ui/badge'
-import { motion } from 'framer-motion'
 import { useReadPosts } from '@/hooks/useReadPosts'
+import { Post } from '@/types'
+import { motion } from 'framer-motion'
+import { ArrowLeft, BarChart3, BookOpen, Calendar, Star, Tag, Trophy, User } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ReactNode } from 'react'
 import FloatingActionButton from './post/FloatingActionButton'
+import { PostReadButton } from './PostReadButton'
+import { Badge } from './ui/badge'
+import { Button } from './ui/button'
 
 interface PostLayoutProps {
   post: Post
   children: ReactNode
-}
-
-// Componente customizado para iframes responsivos
-const ResponsiveIframe = ({ 
-  src, 
-  title,
-  width = "560", 
-  height = "315", 
-  className = "",
-  ...props 
-}: any) => {
-  // Lista de domínios permitidos para iframes
-  const allowedDomains = [
-    'youtube.com',
-    'www.youtube.com',
-    'youtu.be',
-    'vimeo.com',
-    'player.vimeo.com',
-    'codepen.io',
-    'codesandbox.io',
-    'stackblitz.com',
-    'github.com',
-    'gist.github.com',
-    'docs.google.com',
-    'drive.google.com'
-  ]
-
-  // Verifica se o src é de um domínio permitido
-  const isAllowedDomain = (url: string) => {
-    try {
-      const urlObj = new URL(url)
-      return allowedDomains.some(domain => 
-        urlObj.hostname === domain || urlObj.hostname.endsWith(`.${domain}`)
-      )
-    } catch {
-      return false
-    }
-  }
-
-  if (!src || !isAllowedDomain(src)) {
-    return (
-      <div className="w-full max-w-full bg-muted border border-border rounded-lg p-3 sm:p-4 my-4 mx-auto">
-        <p className="text-muted-foreground text-xs sm:text-sm break-all">
-          ⚠️ Iframe não permitido ou URL inválida: {src}
-        </p>
-      </div>
-    )
-  }
-
-  // Calcula aspect ratio baseado nas dimensões
-  const aspectRatio = (parseInt(height) / parseInt(width)) * 100
-
-  return (
-    <div className="w-full max-w-full my-4 sm:my-6">
-      <div className="relative overflow-hidden rounded-lg shadow-lg bg-muted mx-auto max-w-full">
-        <div 
-          className="relative w-full"
-          style={{ 
-            paddingBottom: `${Math.min(aspectRatio, 75)}%`,
-            minHeight: '200px'
-          }}
-        >
-          <iframe
-            src={src}
-            title={title || "Embedded content"}
-            className={`absolute top-0 left-0 w-full h-full border-0 ${className}`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            loading="lazy"
-            {...props}
-          />
-        </div>
-      </div>
-      {title && (
-        <p className="text-xs sm:text-sm text-muted-foreground mt-2 text-center italic px-2">
-          {title}
-        </p>
-      )}
-    </div>
-  )
-}
-
-// Componente para tabelas responsivas
-const ResponsiveTable = ({ children, ...props }: any) => (
-  <div className="w-full max-w-full my-4 sm:my-6 overflow-hidden rounded-lg border border-border shadow-sm">
-    <div className="overflow-x-auto">
-      <table className="min-w-full w-full text-xs sm:text-sm" {...props}>
-        {children}
-      </table>
-    </div>
-  </div>
-)
-
-// Componentes customizados para MDX com responsividade completa
-const mdxComponents = {
-  iframe: ResponsiveIframe,
-  
-  table: ResponsiveTable,
-  
-  th: ({ children, ...props }: any) => (
-    <th className="border-b border-border px-2 sm:px-4 py-2 sm:py-3 bg-muted font-semibold text-left text-foreground text-xs sm:text-sm whitespace-nowrap" {...props}>
-      {children}
-    </th>
-  ),
-  
-  td: ({ children, ...props }: any) => (
-    <td className="border-b border-border px-2 sm:px-4 py-2 sm:py-3 text-muted-foreground text-xs sm:text-sm" {...props}>
-      <div className="break-words max-w-[150px] sm:max-w-none">
-        {children}
-      </div>
-    </td>
-  ),
-  
-  img: ({ src, alt, ...props }: any) => (
-    <div className="relative my-4 sm:my-6 w-full max-w-full">
-      <div className="relative w-full max-w-full overflow-hidden rounded-lg shadow-lg">
-        <Image
-          src={src}
-          alt={alt || ''}
-          width={800}
-          height={400}
-          className="w-full h-auto object-cover"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 800px"
-          {...props}
-        />
-      </div>
-      {alt && (
-        <p className="text-xs sm:text-sm text-muted-foreground mt-2 text-center italic px-2">
-          {alt}
-        </p>
-      )}
-    </div>
-  ),
-  
-  h1: ({ children, ...props }: any) => (
-    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 text-foreground scroll-mt-20 break-words" {...props}>
-      {children}
-    </h1>
-  ),
-  
-  h2: ({ children, ...props }: any) => (
-    <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mt-5 sm:mt-6 mb-2 sm:mb-3 text-foreground scroll-mt-20 break-words" {...props}>
-      {children}
-    </h2>
-  ),
-  
-  h3: ({ children, ...props }: any) => (
-    <h3 className="text-base sm:text-lg md:text-xl font-medium mt-4 mb-2 text-foreground scroll-mt-20 break-words" {...props}>
-      {children}
-    </h3>
-  ),
-  
-  p: ({ children, ...props }: any) => (
-    <p className="mb-3 sm:mb-4 leading-relaxed text-muted-foreground text-sm sm:text-base break-words" {...props}>
-      {children}
-    </p>
-  ),
-  
-  ul: ({ children, ...props }: any) => (
-    <ul className="list-disc list-inside mb-3 sm:mb-4 space-y-1 text-muted-foreground ml-2 sm:ml-4 text-sm sm:text-base" {...props}>
-      {children}
-    </ul>
-  ),
-  
-  ol: ({ children, ...props }: any) => (
-    <ol className="list-decimal list-inside mb-3 sm:mb-4 space-y-1 text-muted-foreground ml-2 sm:ml-4 text-sm sm:text-base" {...props}>
-      {children}
-    </ol>
-  ),
-  
-  li: ({ children, ...props }: any) => (
-    <li className="mb-1 break-words" {...props}>
-      {children}
-    </li>
-  ),
-  
-  blockquote: ({ children, ...props }: any) => (
-    <blockquote className="border-l-2 sm:border-l-4 border-primary pl-3 sm:pl-4 my-3 sm:my-4 italic text-muted-foreground bg-muted/30 py-2 sm:py-3 rounded-r-lg text-sm sm:text-base" {...props}>
-      {children}
-    </blockquote>
-  ),
-  
-  code: ({ children, ...props }: any) => (
-    <code className="bg-muted px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm font-mono text-foreground break-all" {...props}>
-      {children}
-    </code>
-  ),
-  
-  pre: ({ children, ...props }: any) => (
-    <div className="w-full max-w-full my-3 sm:my-4 overflow-hidden rounded-lg border border-border">
-      <div className="overflow-x-auto">
-        <pre className="bg-muted p-3 sm:p-4 text-xs sm:text-sm font-mono whitespace-pre" {...props}>
-          {children}
-        </pre>
-      </div>
-    </div>
-  ),
-  
-  a: ({ children, href, ...props }: any) => (
-    <a 
-      href={href}
-      className="text-primary hover:underline font-medium break-all"
-      target={href?.startsWith('http') ? '_blank' : undefined}
-      rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-      {...props}
-    >
-      {children}
-    </a>
-  ),
 }
 
 export const PostLayout: React.FC<PostLayoutProps> = ({ post, children }) => {
@@ -332,11 +122,13 @@ export const PostLayout: React.FC<PostLayoutProps> = ({ post, children }) => {
           </div>
         </header>
 
-        {/* Conteúdo do post */}
+        {/* Conteúdo do post com estilos de prosa melhorados */}
         <main className="w-full max-w-none">
-          <div className="prose prose-sm sm:prose-base md:prose-lg dark:prose-invert max-w-none w-full overflow-hidden">
-            {children}
-          </div>
+          <article className="prose prose-lg dark:prose-invert max-w-none w-full prose-headings:scroll-mt-20 prose-headings:font-bold prose-h1:text-3xl prose-h1:mb-6 prose-h1:mt-8 prose-h2:text-2xl prose-h2:mb-4 prose-h2:mt-8 prose-h2:border-b prose-h2:border-border/30 prose-h2:pb-2 prose-h3:text-xl prose-h3:mb-3 prose-h3:mt-6 prose-p:text-base prose-p:leading-relaxed prose-p:mb-4 prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-foreground prose-strong:font-semibold prose-code:bg-muted prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:text-foreground prose-code:before:content-none prose-code:after:content-none prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:rounded-lg prose-pre:p-4 prose-pre:overflow-x-auto prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:bg-muted/30 prose-blockquote:py-4 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-ul:list-disc prose-ul:ml-6 prose-ol:list-decimal prose-ol:ml-6 prose-li:mb-1 prose-table:w-full prose-table:border-collapse prose-table:border prose-table:border-border prose-table:rounded-lg prose-table:overflow-hidden prose-thead:bg-muted/50 prose-th:border prose-th:border-border prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:font-semibold prose-th:text-foreground prose-td:border prose-td:border-border prose-td:px-4 prose-td:py-3 prose-td:text-muted-foreground prose-img:rounded-lg prose-img:shadow-lg prose-img:w-full prose-img:h-auto prose-hr:border-border prose-hr:my-8">
+            <div className="markdown-content">
+              {children}
+            </div>
+          </article>
         </main>
 
         {/* Seção de progresso de leitura */}
@@ -486,6 +278,275 @@ export const PostLayout: React.FC<PostLayoutProps> = ({ post, children }) => {
       />
     </div>
   )
+}
+
+// Componentes customizados para MDX - mantendo para compatibilidade
+const ResponsiveIframe = ({ 
+  src, 
+  title,
+  width = "560", 
+  height = "315", 
+  className = "",
+  ...props 
+}: any) => {
+  const allowedDomains = [
+    'youtube.com',
+    'www.youtube.com',
+    'youtu.be',
+    'vimeo.com',
+    'player.vimeo.com',
+    'codepen.io',
+    'codesandbox.io',
+    'stackblitz.com',
+    'github.com',
+    'gist.github.com',
+    'docs.google.com',
+    'drive.google.com'
+  ]
+
+  const isAllowedDomain = (url: string) => {
+    try {
+      const urlObj = new URL(url)
+      return allowedDomains.some(domain => 
+        urlObj.hostname === domain || urlObj.hostname.endsWith(`.${domain}`)
+      )
+    } catch {
+      return false
+    }
+  }
+
+  if (!src || !isAllowedDomain(src)) {
+    return (
+      <div className="w-full max-w-full bg-muted border border-border rounded-lg p-3 sm:p-4 my-4 mx-auto">
+        <p className="text-muted-foreground text-xs sm:text-sm break-all">
+          ⚠️ Iframe não permitido ou URL inválida: {src}
+        </p>
+      </div>
+    )
+  }
+
+  const aspectRatio = (parseInt(height) / parseInt(width)) * 100
+
+  return (
+    <div className="w-full max-w-full my-4 sm:my-6">
+      <div className="relative overflow-hidden rounded-lg shadow-lg bg-muted mx-auto max-w-full">
+        <div 
+          className="relative w-full"
+          style={{ 
+            paddingBottom: `${Math.min(aspectRatio, 75)}%`,
+            minHeight: '200px'
+          }}
+        >
+          <iframe
+            src={src}
+            title={title || "Embedded content"}
+            className={`absolute top-0 left-0 w-full h-full border-0 ${className}`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            loading="lazy"
+            {...props}
+          />
+        </div>
+      </div>
+      {title && (
+        <p className="text-xs sm:text-sm text-muted-foreground mt-2 text-center italic px-2">
+          {title}
+        </p>
+      )}
+    </div>
+  )
+}
+
+const ResponsiveTable = ({ children, ...props }: any) => (
+  <div className="w-full max-w-full my-6 sm:my-8 overflow-hidden rounded-lg border border-border shadow-sm">
+    <div className="overflow-x-auto">
+      <table className="min-w-full w-full text-sm sm:text-base" {...props}>
+        {children}
+      </table>
+    </div>
+  </div>
+)
+
+const mdxComponents = {
+  iframe: ResponsiveIframe,
+  table: ResponsiveTable,
+  
+  thead: ({ children, ...props }: any) => (
+    <thead className="bg-muted/50" {...props}>
+      {children}
+    </thead>
+  ),
+  
+  tbody: ({ children, ...props }: any) => (
+    <tbody {...props}>
+      {children}
+    </tbody>
+  ),
+  
+  tr: ({ children, ...props }: any) => (
+    <tr className="border-b border-border hover:bg-muted/30 transition-colors" {...props}>
+      {children}
+    </tr>
+  ),
+  
+  th: ({ children, ...props }: any) => (
+    <th className="border-b-2 border-border px-3 sm:px-6 py-3 sm:py-4 bg-muted/70 font-semibold text-left text-foreground text-sm sm:text-base" {...props}>
+      <div className="min-w-0 break-words">
+        {children}
+      </div>
+    </th>
+  ),
+  
+  td: ({ children, ...props }: any) => (
+    <td className="border-b border-border/50 px-3 sm:px-6 py-3 sm:py-4 text-muted-foreground text-sm sm:text-base" {...props}>
+      <div className="min-w-0 break-words">
+        {children}
+      </div>
+    </td>
+  ),
+  
+  img: ({ src, alt, ...props }: any) => (
+    <div className="relative my-6 sm:my-8 w-full max-w-full">
+      <div className="relative w-full max-w-full overflow-hidden rounded-lg shadow-lg">
+        <Image
+          src={src}
+          alt={alt || ''}
+          width={800}
+          height={400}
+          className="w-full h-auto object-cover"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 800px"
+          {...props}
+        />
+      </div>
+      {alt && (
+        <p className="text-sm sm:text-base text-muted-foreground mt-3 text-center italic px-2">
+          {alt}
+        </p>
+      )}
+    </div>
+  ),
+  
+  h1: ({ children, ...props }: any) => (
+    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-8 sm:mt-12 mb-4 sm:mb-6 text-foreground scroll-mt-20 break-words leading-tight" {...props}>
+      {children}
+    </h1>
+  ),
+  
+  h2: ({ children, ...props }: any) => (
+    <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold mt-8 sm:mt-10 mb-4 sm:mb-5 text-foreground scroll-mt-20 break-words leading-tight border-b border-border/30 pb-2" {...props}>
+      {children}
+    </h2>
+  ),
+  
+  h3: ({ children, ...props }: any) => (
+    <h3 className="text-lg sm:text-xl md:text-2xl font-medium mt-6 sm:mt-8 mb-3 sm:mb-4 text-foreground scroll-mt-20 break-words leading-tight" {...props}>
+      {children}
+    </h3>
+  ),
+  
+  h4: ({ children, ...props }: any) => (
+    <h4 className="text-base sm:text-lg md:text-xl font-medium mt-6 mb-3 text-foreground scroll-mt-20 break-words" {...props}>
+      {children}
+    </h4>
+  ),
+  
+  h5: ({ children, ...props }: any) => (
+    <h5 className="text-sm sm:text-base md:text-lg font-medium mt-4 mb-2 text-foreground scroll-mt-20 break-words" {...props}>
+      {children}
+    </h5>
+  ),
+  
+  h6: ({ children, ...props }: any) => (
+    <h6 className="text-sm sm:text-base font-medium mt-4 mb-2 text-foreground scroll-mt-20 break-words" {...props}>
+      {children}
+    </h6>
+  ),
+  
+  p: ({ children, ...props }: any) => (
+    <p className="mb-4 sm:mb-6 leading-relaxed text-muted-foreground text-base sm:text-lg break-words" {...props}>
+      {children}
+    </p>
+  ),
+  
+  ul: ({ children, ...props }: any) => (
+    <ul className="list-disc list-outside mb-4 sm:mb-6 space-y-2 text-muted-foreground ml-6 sm:ml-8 text-base sm:text-lg" {...props}>
+      {children}
+    </ul>
+  ),
+  
+  ol: ({ children, ...props }: any) => (
+    <ol className="list-decimal list-outside mb-4 sm:mb-6 space-y-2 text-muted-foreground ml-6 sm:ml-8 text-base sm:text-lg" {...props}>
+      {children}
+    </ol>
+  ),
+  
+  li: ({ children, ...props }: any) => (
+    <li className="mb-1 break-words leading-relaxed" {...props}>
+      {children}
+    </li>
+  ),
+  
+  blockquote: ({ children, ...props }: any) => (
+    <blockquote className="border-l-4 border-primary pl-4 sm:pl-6 my-6 sm:my-8 italic text-muted-foreground bg-muted/30 py-4 sm:py-6 rounded-r-lg text-base sm:text-lg" {...props}>
+      <div className="not-italic">
+        {children}
+      </div>
+    </blockquote>
+  ),
+  
+  code: ({ children, className, ...props }: any) => {
+    if (className) {
+      return (
+        <code className={`${className} block`} {...props}>
+          {children}
+        </code>
+      )
+    }
+    return (
+      <code className="bg-muted px-2 py-1 rounded text-sm font-mono text-foreground break-all" {...props}>
+        {children}
+      </code>
+    )
+  },
+  
+  pre: ({ children, ...props }: any) => (
+    <div className="w-full max-w-full my-6 sm:my-8 overflow-hidden rounded-lg border border-border shadow-sm">
+      <div className="overflow-x-auto">
+        <pre className="bg-muted p-4 sm:p-6 text-sm sm:text-base font-mono whitespace-pre" {...props}>
+          {children}
+        </pre>
+      </div>
+    </div>
+  ),
+  
+  a: ({ children, href, ...props }: any) => (
+    <a 
+      href={href}
+      className="text-primary hover:text-primary/80 hover:underline font-medium break-all transition-colors"
+      target={href?.startsWith('http') ? '_blank' : undefined}
+      rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+      {...props}
+    >
+      {children}
+    </a>
+  ),
+  
+  strong: ({ children, ...props }: any) => (
+    <strong className="font-semibold text-foreground" {...props}>
+      {children}
+    </strong>
+  ),
+  
+  em: ({ children, ...props }: any) => (
+    <em className="italic" {...props}>
+      {children}
+    </em>
+  ),
+  
+  hr: ({ ...props }: any) => (
+    <hr className="my-8 sm:my-12 border-border" {...props} />
+  ),
 }
 
 // Exportar os componentes MDX para uso em outros lugares

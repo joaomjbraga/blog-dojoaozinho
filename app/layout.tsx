@@ -1,8 +1,8 @@
+import Header from '@/components/Navigation'
+import { ThemeProvider } from '@/components/theme-provider'
+import { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { Metadata } from 'next'
-import { ThemeProvider } from '@/components/theme-provider'
-import Header from '@/components/Navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
    <html lang="pt-br" suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Header />
           <main className="flex-1 container mx-auto px-4 py-8">{children}</main>
         </ThemeProvider>

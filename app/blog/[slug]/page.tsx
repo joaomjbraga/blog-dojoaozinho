@@ -1,8 +1,7 @@
-import { notFound } from 'next/navigation'
-import { getPostBySlug, getAllPosts } from '@/lib/mdx'
 import { PostLayout, mdxComponents } from '@/components/PostLayout'
+import { getAllPosts, getPostBySlug } from '@/lib/mdx'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-
+import { notFound } from 'next/navigation'
 
 interface PostPageProps {
   params: {
@@ -17,7 +16,9 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: PostPageProps) {
+// 👇 Ajuste aqui
+export async function generateMetadata(props: PostPageProps) {
+  const { params } = await props
   const post = await getPostBySlug(params.slug)
   
   if (!post) {
@@ -48,7 +49,9 @@ export async function generateMetadata({ params }: PostPageProps) {
   }
 }
 
-export default async function PostPage({ params }: PostPageProps) {
+// 👇 Ajuste aqui também
+export default async function PostPage(props: PostPageProps) {
+  const { params } = await props
   const post = await getPostBySlug(params.slug)
 
   if (!post) {

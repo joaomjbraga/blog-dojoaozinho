@@ -335,3 +335,438 @@
     transition: opacity 0.2s ease, transform 0.1s ease !important;
   }
 }
+
+/* Estilos específicos para o conteúdo markdown */
+.markdown-content {
+  @apply text-base leading-relaxed;
+}
+
+.markdown-content h1 {
+  @apply text-3xl font-bold mt-8 mb-6 text-foreground border-b border-border/30 pb-3;
+}
+
+.markdown-content h2 {
+  @apply text-2xl font-semibold mt-8 mb-4 text-foreground border-b border-border/20 pb-2;
+}
+
+.markdown-content h3 {
+  @apply text-xl font-medium mt-6 mb-3 text-foreground;
+}
+
+.markdown-content h4 {
+  @apply text-lg font-medium mt-6 mb-3 text-foreground;
+}
+
+.markdown-content h5 {
+  @apply text-base font-medium mt-4 mb-2 text-foreground;
+}
+
+.markdown-content h6 {
+  @apply text-sm font-medium mt-4 mb-2 text-foreground;
+}
+
+.markdown-content p {
+  @apply mb-4 leading-relaxed text-muted-foreground;
+}
+
+.markdown-content ul {
+  @apply list-disc list-outside mb-4 space-y-1 text-muted-foreground ml-6;
+}
+
+.markdown-content ol {
+  @apply list-decimal list-outside mb-4 space-y-1 text-muted-foreground ml-6;
+}
+
+.markdown-content li {
+  @apply mb-1 leading-relaxed;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-primary pl-4 my-6 italic text-muted-foreground bg-muted/30 py-4 rounded-r-lg;
+}
+
+.markdown-content code {
+  @apply bg-muted px-2 py-1 rounded text-sm font-mono text-foreground;
+}
+
+.markdown-content pre {
+  @apply bg-muted border border-border rounded-lg p-4 overflow-x-auto my-6;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent p-0 text-sm;
+}
+
+.markdown-content a {
+  @apply text-primary hover:text-primary/80 hover:underline font-medium transition-colors;
+}
+
+.markdown-content strong {
+  @apply font-semibold text-foreground;
+}
+
+.markdown-content em {
+  @apply italic;
+}
+
+.markdown-content hr {
+  @apply my-8 border-border;
+}
+
+.markdown-content table {
+  @apply w-full border-collapse border border-border rounded-lg overflow-hidden my-6;
+}
+
+.markdown-content thead {
+  @apply bg-muted/50;
+}
+
+.markdown-content th {
+  @apply border border-border px-4 py-3 text-left font-semibold text-foreground;
+}
+
+.markdown-content td {
+  @apply border border-border px-4 py-3 text-muted-foreground;
+}
+
+.markdown-content tr:hover {
+  @apply bg-muted/30;
+}
+
+.markdown-content img {
+  @apply rounded-lg shadow-lg w-full h-auto my-6;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 640px) {
+  .markdown-content h1 {
+    @apply text-2xl;
+  }
+  
+  .markdown-content h2 {
+    @apply text-xl;
+  }
+  
+  .markdown-content h3 {
+    @apply text-lg;
+  }
+  
+  .markdown-content table {
+    @apply text-sm;
+  }
+  
+  .markdown-content th,
+  .markdown-content td {
+    @apply px-2 py-2 text-xs;
+  }
+  
+  .markdown-content ul,
+  .markdown-content ol {
+    @apply ml-4;
+  }
+  
+  .markdown-content blockquote {
+    @apply pl-3 py-3;
+  }
+  
+  .markdown-content pre {
+    @apply p-3 text-xs;
+  }
+  
+  .markdown-content code {
+    @apply text-xs px-1;
+  }
+}
+
+/* Estilos para syntax highlighting em blocos de código */
+.markdown-content pre[class*="language-"] {
+  @apply bg-muted border border-border rounded-lg p-4 overflow-x-auto my-6 text-sm;
+}
+
+.markdown-content code[class*="language-"] {
+  @apply bg-transparent text-foreground;
+}
+
+/* Estilos para tabelas responsivas */
+.markdown-content .table-container {
+  @apply w-full overflow-x-auto my-6 border border-border rounded-lg;
+}
+
+.markdown-content .table-container table {
+  @apply min-w-full border-0 rounded-none my-0;
+}
+
+/* Estilos para iframes responsivos */
+.markdown-content .iframe-container {
+  @apply relative w-full my-6 overflow-hidden rounded-lg shadow-lg;
+}
+
+.markdown-content .iframe-container iframe {
+  @apply absolute top-0 left-0 w-full h-full border-0;
+}
+
+/* Melhorias para acessibilidade */
+.markdown-content a:focus {
+  @apply outline-2 outline-primary outline-offset-2;
+}
+
+.markdown-content button:focus {
+  @apply outline-2 outline-primary outline-offset-2;
+}
+
+/* Estilos para elementos de destaque */
+.markdown-content .highlight {
+  @apply bg-yellow-100 dark:bg-yellow-900/30 px-1 rounded;
+}
+
+.markdown-content .note {
+  @apply bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 my-4;
+}
+
+.markdown-content .warning {
+  @apply bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 my-4;
+}
+
+.markdown-content .error {
+  @apply bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 my-4;
+}
+
+.markdown-content .success {
+  @apply bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 my-4;
+}
+
+/* Estilos para listas aninhadas */
+.markdown-content ul ul,
+.markdown-content ol ol,
+.markdown-content ul ol,
+.markdown-content ol ul {
+  @apply mt-2 mb-0;
+}
+
+/* Estilos para definições */
+.markdown-content dl {
+  @apply my-4;
+}
+
+.markdown-content dt {
+  @apply font-semibold text-foreground mt-4 first:mt-0;
+}
+
+.markdown-content dd {
+  @apply ml-4 text-muted-foreground;
+}
+
+/* Estilos para citações inline */
+.markdown-content q {
+  @apply italic;
+}
+
+.markdown-content q::before {
+  content: '"';
+}
+
+.markdown-content q::after {
+  content: '"';
+}
+
+/* Estilos para abreviações */
+.markdown-content abbr {
+  @apply border-b border-dotted border-muted-foreground cursor-help;
+}
+
+/* Estilos para marcações */
+.markdown-content mark {
+  @apply bg-yellow-200 dark:bg-yellow-800 px-1 rounded;
+}
+
+/* Estilos para texto pequeno */
+.markdown-content small {
+  @apply text-sm text-muted-foreground;
+}
+
+/* Estilos para subscrito e sobrescrito */
+.markdown-content sub,
+.markdown-content sup {
+  @apply text-xs;
+}
+
+/* Estilos para elementos de teclado */
+.markdown-content kbd {
+  @apply bg-muted border border-border rounded px-2 py-1 text-xs font-mono;
+}
+
+/* Estilos para elementos de amostra */
+.markdown-content samp {
+  @apply bg-muted px-2 py-1 rounded text-sm font-mono;
+}
+
+/* Estilos para elementos de variável */
+.markdown-content var {
+  @apply italic font-mono;
+}
+
+/* Estilos para elementos de saída */
+.markdown-content output {
+  @apply bg-muted px-2 py-1 rounded text-sm font-mono;
+}
+
+/* Estilos para elementos de progresso */
+.markdown-content progress {
+  @apply w-full h-2 bg-muted rounded-full overflow-hidden;
+}
+
+.markdown-content progress::-webkit-progress-bar {
+  @apply bg-muted rounded-full;
+}
+
+.markdown-content progress::-webkit-progress-value {
+  @apply bg-primary rounded-full;
+}
+
+.markdown-content progress::-moz-progress-bar {
+  @apply bg-primary rounded-full;
+}
+
+/* Estilos para elementos de medição */
+.markdown-content meter {
+  @apply w-full h-2 bg-muted rounded-full overflow-hidden;
+}
+
+.markdown-content meter::-webkit-meter-bar {
+  @apply bg-muted rounded-full;
+}
+
+.markdown-content meter::-webkit-meter-optimum-value {
+  @apply bg-green-500 rounded-full;
+}
+
+.markdown-content meter::-webkit-meter-suboptimum-value {
+  @apply bg-yellow-500 rounded-full;
+}
+
+.markdown-content meter::-webkit-meter-even-less-good-value {
+  @apply bg-red-500 rounded-full;
+}
+
+/* Estilos para elementos de detalhes */
+.markdown-content details {
+  @apply border border-border rounded-lg p-4 my-4;
+}
+
+.markdown-content summary {
+  @apply font-semibold cursor-pointer hover:text-primary transition-colors;
+}
+
+.markdown-content details[open] summary {
+  @apply mb-3 pb-3 border-b border-border;
+}
+
+/* Estilos para elementos de figura */
+.markdown-content figure {
+  @apply my-6;
+}
+
+.markdown-content figcaption {
+  @apply text-sm text-muted-foreground text-center mt-2 italic;
+}
+
+/* Estilos para elementos de endereço */
+.markdown-content address {
+  @apply not-italic text-muted-foreground;
+}
+
+/* Estilos para elementos de tempo */
+.markdown-content time {
+  @apply text-muted-foreground;
+}
+
+/* Estilos para elementos de inserção e deleção */
+.markdown-content ins {
+  @apply bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 no-underline;
+}
+
+.markdown-content del {
+  @apply bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200;
+}
+
+/* Estilos para elementos de citação */
+.markdown-content cite {
+  @apply italic text-muted-foreground;
+}
+
+/* Estilos para elementos de dados */
+.markdown-content data {
+  @apply font-mono text-sm;
+}
+
+/* Estilos para elementos de ruby */
+.markdown-content ruby {
+  @apply relative;
+}
+
+.markdown-content rt {
+  @apply text-xs absolute -top-4 left-1/2 transform -translate-x-1/2;
+}
+
+/* Estilos para elementos de bidi */
+.markdown-content bdi,
+.markdown-content bdo {
+  @apply isolate;
+}
+
+/* Estilos para elementos de quebra de palavra */
+.markdown-content wbr::after {
+  content: '\00200B';
+}
+
+/* Estilos para print */
+@media print {
+  .markdown-content {
+    @apply text-black bg-white;
+  }
+  
+  .markdown-content a {
+    @apply text-blue-600 underline;
+  }
+  
+  .markdown-content code,
+  .markdown-content pre {
+    @apply bg-gray-100 border border-gray-300;
+  }
+  
+  .markdown-content blockquote {
+    @apply bg-gray-50 border-gray-300;
+  }
+  
+  .markdown-content table {
+    @apply border-gray-300;
+  }
+  
+  .markdown-content th,
+  .markdown-content td {
+    @apply border-gray-300;
+  }
+  
+  .markdown-content th {
+    @apply bg-gray-100;
+  }
+}
+
+/* Animações suaves */
+.markdown-content * {
+  @apply transition-colors duration-200;
+}
+
+/* Estilos para foco visível */
+.markdown-content *:focus-visible {
+  @apply outline-2 outline-primary outline-offset-2;
+}
+
+/* Estilos para seleção de texto */
+.markdown-content ::selection {
+  @apply bg-primary/20;
+}
+
+.markdown-content ::-moz-selection {
+  @apply bg-primary/20;
+}
