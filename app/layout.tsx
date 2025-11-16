@@ -1,32 +1,26 @@
-import Header from '@/components/Navigation'
-import { ThemeProvider } from '@/components/theme-provider'
-import { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import type { Metadata } from 'next';
+import './globals.css';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Blog do Joãozinho - Tecnologia, Linux e Desenvolvimento',
-  description: 'Um blog sobre tecnologia, desenvolvimento web, Linux e outros tópicos relacionados à área de TI.',
+  title: 'Blog do Joãozin',
   icons: {
-    icon: '/favicon.svg',
-  }
-}
+    icon: '/LGO.png'
+  },
+  description: 'post sobre o mundo tech',
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-   <html lang="pt-br" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Header />
-          <main className="flex-1 container mx-auto px-4 py-8">{children}</main>
-        </ThemeProvider>
+    <html lang="pt-BR">
+      <body className="bg-white text-gray-900 antialiased">
+        {children}
+        <Footer />
       </body>
     </html>
-  )
+  );
 }

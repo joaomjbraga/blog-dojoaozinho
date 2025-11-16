@@ -10,12 +10,8 @@
 !.yarn/releases
 !.yarn/versions
 
-# Arquivos do PNPM
-pnpm*
-
 # testing
 /coverage
-
 # next.js
 /.next/
 /out/
@@ -42,3 +38,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+package-lock.json
