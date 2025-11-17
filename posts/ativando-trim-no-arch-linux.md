@@ -2,7 +2,7 @@
 title: "Como Ativar o TRIM no Arch Linux"
 excerpt: "Aprenda a ativar o TRIM no Arch Linux para otimizar o desempenho e a durabilidade do seu SSD."
 date: 2025-05-18
-category: "Tutoriais"
+category: "Linux"
 ---
 
 ## 💡 O que é TRIM e por que ativá-lo?
