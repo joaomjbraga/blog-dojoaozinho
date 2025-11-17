@@ -1,15 +1,8 @@
 ---
-slug: "iniciando-na-programacao"
 title: "Como Começar na Programação: Guia Completo e Prático para Iniciantes"
 date: "2025-05-22"
 excerpt: "Está começando na programação e quer um guia completo para entender o básico, escolher tecnologias, praticar e se desenvolver? Confira dicas detalhadas para dar seus primeiros passos com segurança."
-tags: ["programação", "iniciantes","gua", "aprendizado", "tecnologia"]
 category: "Programação"
-author:
-  name: "João Marcos"
-  bio: "Estudante de Análise e Desenvolvimento de Sistemas e entusiasta de tecnologia."
-  image: "https://avatars.githubusercontent.com/u/195451083?v=4"
-coverImage: "https://blog.hubdodesenvolvedor.com.br/wp-content/uploads/2024/03/capa-linguagens-em-alta.jpg"
 ---
 
 # Como Começar na Programação: Guia Completo e Prático para Iniciantes

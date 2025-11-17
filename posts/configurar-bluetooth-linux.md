@@ -3,23 +3,17 @@ title: "Como Configurar o Bluetooth no Linux de Forma Simples"
 excerpt: "Um guia prático para configurar e solucionar problemas de Bluetooth no Arch Linux, Ubuntu e suas derivadas."
 date: "2025-05-20T22:30:00Z"
 category: "Tutoriais"
-tags: ['linux', 'arch', 'bluetooth', 'tutorial']
-coverImage: "https://img.odcdn.com.br/wp-content/uploads/2023/07/bluetooth.png"
-author:
-  name: "João Marcos"
-  image: "https://avatars.githubusercontent.com/u/195451083?v=4"
-  bio: "Estudante de Análise e Desenvolvimento de Sistemas, entusiasta de sistemas operacionais e tecnologia."
 ---
 
 # Como Configurar o Bluetooth no Linux de Forma Simples
 
-Configurar o Bluetooth no Linux é geralmente fácil nas distribuições modernas, como Ubuntu, Pop!_OS, Arch Linux e suas derivadas. Porém, se você está enfrentando dificuldades para parear dispositivos ou o Bluetooth não funciona corretamente, este guia prático vai ajudar você a resolver isso rapidamente.
+Configurar o Bluetooth no Linux é geralmente fácil nas distribuições modernas, como Ubuntu, Pop!\_OS, Arch Linux e suas derivadas. Porém, se você está enfrentando dificuldades para parear dispositivos ou o Bluetooth não funciona corretamente, este guia prático vai ajudar você a resolver isso rapidamente.
 
 Neste tutorial, você vai aprender a:
 
-- Identificar o dispositivo Bluetooth do seu computador  
-- Configurar o Bluetooth no Arch Linux, Manjaro e distribuições baseadas em Debian/Ubuntu  
-- Diagnosticar e solucionar problemas comuns, especialmente com dispositivos de áudio Bluetooth  
+- Identificar o dispositivo Bluetooth do seu computador
+- Configurar o Bluetooth no Arch Linux, Manjaro e distribuições baseadas em Debian/Ubuntu
+- Diagnosticar e solucionar problemas comuns, especialmente com dispositivos de áudio Bluetooth
 
 ---
 
@@ -135,7 +129,8 @@ sudo systemctl enable --now bluetooth.service
 </table>
 
 ---
-## 3. Configurando o Bluetooth no Ubuntu, Pop!_OS e Derivadas
+
+## 3. Configurando o Bluetooth no Ubuntu, Pop!\_OS e Derivadas
 
 ### Passo 1: Instale os pacotes necessários
 
@@ -151,12 +146,12 @@ sudo systemctl enable --now bluetooth.service
 
 ### Passo 3: Use o gerenciador de Bluetooth da sua interface gráfica (exemplo GNOME)
 
-- Acesse as configurações do sistema → Bluetooth  
-- Ou instale ferramentas adicionais, como `blueman`:  
+- Acesse as configurações do sistema → Bluetooth
+- Ou instale ferramentas adicionais, como `blueman`:
   ```bash
   sudo apt install blueman
   ```
-- Execute:  
+- Execute:
   ```bash
   blueman-manager
   ```
@@ -202,6 +197,6 @@ Com os passos certos, configurar e usar o Bluetooth no Linux é simples. Identif
 
 ## Referências
 
-- Diolinux - [Como configurar o Bluetooth no Linux](https://diolinux.com.br //como-configurar-o-bluetooth-no-linux) (acessado em 20/05/2025)  
-- [Wiki Arch Linux: Bluetooth](https://wiki.archlinux.org/title/Bluetooth)  
-- [System76 Support - Pop!_OS](https://support.system76.com)  
+- Diolinux - [Como configurar o Bluetooth no Linux](https://diolinux.com.br //como-configurar-o-bluetooth-no-linux) (acessado em 20/05/2025)
+- [Wiki Arch Linux: Bluetooth](https://wiki.archlinux.org/title/Bluetooth)
+- [System76 Support - Pop!\_OS](https://support.system76.com)
