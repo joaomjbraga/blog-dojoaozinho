@@ -21,7 +21,6 @@ export default function Home() {
             <span className="hidden sm:block">Edição #{posts.length}</span>
           </div>
         </div>
-
         {/* Layout principal */}
         <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Coluna principal - 2 colunas */}
