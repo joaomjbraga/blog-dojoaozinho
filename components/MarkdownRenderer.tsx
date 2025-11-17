@@ -39,7 +39,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             </blockquote>
           ),
           code: ({ children }) => (
-            <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono">
+            <code className=" px-2 py-1 rounded text-sm font-mono">
               {children}
             </code>
           ),
